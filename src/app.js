@@ -20,11 +20,17 @@ setImmediate(() => {
 })
 
 let io = require("socket.io")(server);
-// server.listen(3000);
 
 io.on('connection', function(socket) {
 
     console.log("SOCKET CONNECTION")
+
+    /**
+     * Fetch Shuffle on user
+     */
+    socket.on('fetch_shuffle', (data) => {
+
+    })
 
     /**
      * @param{id: String} data
@@ -74,9 +80,6 @@ io.on('connection', function(socket) {
      */
 })
 
-app.get('/', (req, res) => {
-    res.render()
-})
 
 /**
  * @param {String} content 
