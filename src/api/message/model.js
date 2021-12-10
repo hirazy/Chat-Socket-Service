@@ -1,25 +1,25 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-
-const contentSchema = new Schema({
-    ismy: Boolean,
-    message: String,
-    image: String,
-    isImage: Boolean
+const messageSchema = new Schema({
+    content:{
+        type: String,
+        required: true
+    },
+    sender:{
+        type: String,
+        required: true
+    },
+    receiver:{
+        type: String,
+        required: true
+    },
+    isImage: {
+        type: Boolean,
+        default: false
+    }
 }, { timestamps: true });
 
-
-const receiverSchema = new Schema({
-    _id: String,
-    messages: [contentSchema]
-});
-
-
-const messageSchema = new Schema({
-    _id: String,
-    users: [receiverSchema]
-});
 
 const model = mongoose.model('Message', messageSchema)
 

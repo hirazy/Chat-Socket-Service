@@ -1,8 +1,10 @@
 import { Router } from 'express'
 import { middleware as query } from 'querymen'
+import { middleware as body } from 'bodymen'
 import { create, index, show, update, destroy } from './controller'
-import SomeEntity, { schema } from './model'
+import Room, { schema } from './model'
 
+const {users, messages} = schema.tree
 const router = new Router()
 
 /**
@@ -14,18 +16,8 @@ const router = new Router()
  * @apiError 404 Some entity not found.
  */
 router.post('/',
+    body({users, messages}),
     create)
-
-// /**
-//  * @api {post} /some-entities Create some entity
-//  * @apiName CreateSomeEntity
-//  * @apiGroup SomeEntity
-//  * @apiSuccess {Object} someEntity Some entity's data.
-//  * @apiError {Object} 400 Some parameters may contain invalid values.
-//  * @apiError 404 Some entity not found.
-//  */
-// router.post('/image',
-// create)
 
 /**
  * @api {get} /some-entities Retrieve some entities
