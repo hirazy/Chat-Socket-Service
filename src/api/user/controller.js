@@ -1,5 +1,5 @@
 import { success, notFound } from '../../services/response/'
-import { User } from '.'
+import User, { schema } from './model'
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     User.find(query, select, cursor)
