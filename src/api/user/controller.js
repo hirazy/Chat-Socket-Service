@@ -18,7 +18,7 @@ export const showMe = ({ user }, res) =>
     res.json(user.view(true))
 
 export const create = ({ bodymen: { body } }, res, next) =>
-    User.insert(body)
+    User.create(body)
     .then((user) => user.view(true))
     .then(success(res, 201))
     .catch((err) => {
