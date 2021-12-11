@@ -30,6 +30,7 @@ let io = require("socket.io")(server);
  * TODO: sign_in, sign_up, log_out, fetch_shuffle, chatID, fetch_message, send_message
  */
 
+
 io.on('connection', function(socket) {
 
     /**
@@ -40,9 +41,15 @@ io.on('connection', function(socket) {
     })
 
     /**
+     * @param{id: String} data
      * 
+     * TODO: Event Login => change socketID
      */
     socket.on('login', (data) => {
+        /**
+         * Change Socket ID
+         */
+        socket.id = data.id
 
     })
 
@@ -53,6 +60,7 @@ io.on('connection', function(socket) {
     socket.on('log_out', (data) => {
         // Set id socket empty
         socket.id = ''
+
     })
 
     /**
@@ -210,6 +218,7 @@ io.on('connection', function(socket) {
         let senderID = data.senderChatID
         let content = data.content
         let isImage = data.isImage
+
     })
 
     /**
