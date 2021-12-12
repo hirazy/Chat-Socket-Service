@@ -4,7 +4,7 @@ import { middleware as body } from 'bodymen'
 import { create, index, show, update, destroy } from './controller'
 import Room, { schema } from './model'
 
-const {users, messages} = schema.tree
+const { users, messages } = schema.tree
 const router = new Router()
 
 /**
@@ -16,7 +16,8 @@ const router = new Router()
  * @apiError 404 Some entity not found.
  */
 router.post('/',
-    body({users, messages}),
+    master(),
+    body({ users, messages }),
     create)
 
 /**

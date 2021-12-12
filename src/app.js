@@ -131,6 +131,8 @@ io.on('connection', function(socket) {
     socket.on('send_message', async(message) => {
         let defaultRoomID = ''
 
+        console.log("SEND_MESSAGE " + message)
+
         let receiverID = message.receiverID
         let senderID = message.senderID
         let content = message.content

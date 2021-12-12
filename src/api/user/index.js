@@ -5,8 +5,6 @@ import { password as passwordAuth, master, token } from '../../services/passport
 import { index, showMe, show, create, update, updatePassword, destroy } from './controller'
 import User, { schema } from './model'
 
-// exports User, { schema } from './model'
-
 const router = new Router()
 const { email, password, name, picture, role } = schema.tree
 
