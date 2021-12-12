@@ -16,7 +16,6 @@ const router = new Router()
  * @apiError 404 Some entity not found.
  */
 router.post('/',
-    master(),
     body({ users, messages }),
     create)
 
