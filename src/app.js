@@ -51,6 +51,8 @@ io.on('connection', function(socket) {
          */
         socket.id = data.id
 
+        /// Log ID Socket
+        console.log("Socket ID " + socket.id)
     })
 
     /**
