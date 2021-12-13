@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { create, index, show, update, destroy } from './controller'
+import { password, master } from '../../services/passport'
 import Room, { schema } from './model'
 
 const { users, messages } = schema.tree
@@ -16,6 +17,7 @@ const router = new Router()
  * @apiError 404 Some entity not found.
  */
 router.post('/',
+    master(),
     body({ users, messages }),
     create)
 

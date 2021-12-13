@@ -62,7 +62,6 @@ io.on('connection', function(socket) {
     socket.on('log_out', (data) => {
         // Set id socket empty
         socket.id = ''
-
     })
 
     /**
