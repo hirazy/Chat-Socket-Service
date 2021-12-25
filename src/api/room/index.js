@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
-import { create, index, show, update, destroy } from './controller'
+import { create, index, show, add_message, update, destroy } from './controller'
 import { password, master } from '../../services/passport'
 import Room, { schema } from './model'
 
@@ -20,6 +20,19 @@ router.post('/',
     master(),
     body({ users, messages }),
     create)
+
+/**
+ * @api {post} /message Add message to room
+ * @apiName Update Room
+ * @apiGroup SomeEntity
+ * @apiSuccess {Object} someEntity Some entity's data.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiError 404 Some entity not found.
+ */
+router.post('/',
+    master(),
+    body({ messages }),
+    add_message)
 
 /**
  * @api {get} /some-entities Retrieve some entities
