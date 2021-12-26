@@ -6,7 +6,7 @@ import { password, master } from '../../services/passport'
 import Room, { schema } from './model'
 
 const { users, messages } = schema.tree
-const { message } = schema.tree
+const { senderID, receiverID, content } = schema.tree
 const router = new Router()
 
 /**
@@ -32,7 +32,7 @@ router.post('/',
  */
 router.post('/:id/add_message',
     master(),
-    body({ message }),
+    body({ senderID, receiverID, content }),
     add_message)
 
 /**

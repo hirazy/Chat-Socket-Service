@@ -27,7 +27,7 @@ export const add_message = ({ bodymen: { body }, params }, res, next) =>
         }
     })
     .then(notFound(res))
-    .then(success(res, 201))
+    .then(success(res, 200))
     .catch(next)
 
 export const update = ({ body, params }, res, next) =>
