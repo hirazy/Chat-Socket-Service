@@ -20,15 +20,14 @@ export const show = ({ params }, res, next) =>
     .then(success(res))
     .catch(next)
 
-export const add_message = ({ bodymen: { body } }, res, next) =>
-    Room.findById(params.id)
-    .then(notFound(res))
-    .then((room) => room ? room.update({
+export const add_message = ({ bodymen: { body }, params }, res, next) =>
+    Room.updateOne({ _id: params._id }, {
         $push: {
             messages: body
         }
-    }) : null)
-    .then(success(res))
+    })
+    .then(notFound(res))
+    .then(success(res, 201))
     .catch(next)
 
 export const update = ({ body, params }, res, next) =>

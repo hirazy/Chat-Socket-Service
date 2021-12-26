@@ -6,6 +6,7 @@ import { password, master } from '../../services/passport'
 import Room, { schema } from './model'
 
 const { users, messages } = schema.tree
+const { message } = schema.tree
 const router = new Router()
 
 /**
@@ -29,9 +30,9 @@ router.post('/',
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Some entity not found.
  */
-router.post('/add_message',
+router.post('/:id/add_message',
     master(),
-    body({ messages }),
+    body({ message }),
     add_message)
 
 /**
