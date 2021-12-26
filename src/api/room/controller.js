@@ -21,7 +21,7 @@ export const show = ({ params }, res, next) =>
     .catch(next)
 
 export const add_message = ({ bodymen: { body }, params }, res, next) =>
-    Room.updateOne({ _id: params._id }, {
+    Room.updateOne({ _id: params.id }, {
         $push: {
             messages: body
         }
