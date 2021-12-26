@@ -1,18 +1,22 @@
 import mongoose, { Schema } from 'mongoose'
 
 const roomSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    },
     users: [{
         user: {
             type: Schema.ObjectId,
             ref: "User"
         }
     }],
-    messages: [{
-        message: {
-            type: Schema.ObjectId,
-            ref: "Message"
-        }
-    }]
+    messages: [],
+    picture: {
+        type: String,
+        trim: true
+    }
 }, { timestamps: true })
 
 roomSchema.methods = {

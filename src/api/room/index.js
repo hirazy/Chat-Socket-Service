@@ -5,7 +5,7 @@ import { create, index, show, add_message, update, destroy } from './controller'
 import { password, master } from '../../services/passport'
 import Room, { schema } from './model'
 
-const { users, messages } = schema.tree
+const { name, users, messages, picture } = schema.tree
 const { content, senderID, receiverID, isImage } = schema.tree
 const router = new Router()
 
@@ -19,7 +19,7 @@ const router = new Router()
  */
 router.post('/',
     master(),
-    body({ users, messages }),
+    body({ name, users, messages, picture }),
     create)
 
 /**
