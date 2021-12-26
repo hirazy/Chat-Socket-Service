@@ -53,7 +53,7 @@ router.get('/:id',
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Some entity not found.
  */
-router.put('/:id/add_message',
+router.put('/add_message/:id',
     master(),
     body({ content, senderID, receiverID, isImage }),
     add_message)
