@@ -43,6 +43,7 @@ router.get('/',
  * @apiError 404 Some entity not found.
  */
 router.get('/:id',
+    master(),
     show)
 
 /**
