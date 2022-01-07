@@ -47,7 +47,7 @@ roomSchema.methods = {
         }
 
         fields.forEach((field) => { view[field] = this[field] })
-        return view
+        return JSON.parse(view)
     }
 }
 
