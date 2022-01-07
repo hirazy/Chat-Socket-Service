@@ -136,9 +136,6 @@ io.on('connection', function(socket) {
         let content = message.content
         let isImage = message.isImage
 
-        // ID of room contain message
-        let roomID = message.roomID
-
         let newMessage = {
             sender: senderID,
             receiver: receiverID,
