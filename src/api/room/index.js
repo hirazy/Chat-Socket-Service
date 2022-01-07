@@ -46,29 +46,31 @@ router.get('/:id',
     master(),
     show)
 
-/**
- * @api {post} /message Add message to room
- * @apiName Update Room
- * @apiGroup SomeEntity
- * @apiSuccess {Object} someEntity Some entity's data.
- * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 404 Some entity not found.
- */
-router.put('/message/:id',
-    master(),
-    body({ content, senderID, isImage }),
-    add_message)
-
 // /**
-//  * @api {put} /some-entities/:id Update some entity
-//  * @apiName UpdateSomeEntity
+//  * @api {post} /message Add message to room
+//  * @apiName Update Room
 //  * @apiGroup SomeEntity
 //  * @apiSuccess {Object} someEntity Some entity's data.
 //  * @apiError {Object} 400 Some parameters may contain invalid values.
 //  * @apiError 404 Some entity not found.
 //  */
-// router.put('/:id',
-//     update)
+// router.put('/message/:id',
+//     master(),
+//     body({ content, senderID, isImage }),
+//     add_message)
+
+/**
+ * @api {put} /some-entities/:id Update some entity
+ * @apiName UpdateSomeEntity
+ * @apiGroup SomeEntity
+ * @apiSuccess {Object} someEntity Some entity's data.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiError 404 Some entity not found.
+ */
+router.put('/:id',
+    master(),
+    body({ content, senderID, isImage }),
+    add_message)
 
 /**
  * @api {delete} /some-entities/:id Delete some entity
