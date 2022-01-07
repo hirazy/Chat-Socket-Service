@@ -59,16 +59,16 @@ router.put('/message/:id',
     body({ content, senderID, isImage }),
     add_message)
 
-/**
- * @api {put} /some-entities/:id Update some entity
- * @apiName UpdateSomeEntity
- * @apiGroup SomeEntity
- * @apiSuccess {Object} someEntity Some entity's data.
- * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 404 Some entity not found.
- */
-router.put('/:id',
-    update)
+// /**
+//  * @api {put} /some-entities/:id Update some entity
+//  * @apiName UpdateSomeEntity
+//  * @apiGroup SomeEntity
+//  * @apiSuccess {Object} someEntity Some entity's data.
+//  * @apiError {Object} 400 Some parameters may contain invalid values.
+//  * @apiError 404 Some entity not found.
+//  */
+// router.put('/:id',
+//     update)
 
 /**
  * @api {delete} /some-entities/:id Delete some entity
