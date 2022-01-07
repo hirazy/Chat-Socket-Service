@@ -12,9 +12,20 @@ const roomSchema = new Schema({
             ref: "User"
         }
     }],
+    /**
+     * senderID: Id of user
+     * content: String of message or link to Image
+     * isImage: Boolean
+     * createdAt: String of time    
+     */
     messages: [],
     picture: {
         type: String,
+        trim: true
+    },
+    recentMessage: {
+        type: String,
+        default: "",
         trim: true
     }
 }, { timestamps: true })
@@ -32,7 +43,7 @@ roomSchema.methods = {
         let fields = ['users', 'messages']
 
         if (full) {
-            fields = [...fields, 'email', 'createdAt']
+            fields = [...fields, 'name', 'picture', 'recentMessage']
         }
 
         fields.forEach((field) => { view[field] = this[field] })
