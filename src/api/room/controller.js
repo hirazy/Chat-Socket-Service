@@ -26,9 +26,6 @@ export const add_message = ({ bodymen: { body }, params }, res, next) =>
             messages: body
         }
     })
-    .then(notFound(res))
-    .then(success(res, 200))
-    .catch(next)
 
 export const update = ({ body, params }, res, next) =>
     Room.findById(params.id)
