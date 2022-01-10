@@ -20,7 +20,7 @@ export const show = ({ params }, res, next) =>
     .then(success(res))
     .catch(next)
 
-export const add_message = ({ body, params }, res, next) =>
+export const add_message = ({ bodymen: { body }, params }, res, next) =>
     Room.updateOne({ _id: params.id }, {
         $push: {
             messages: body
