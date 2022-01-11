@@ -21,7 +21,11 @@ export const show = ({ params }, res, next) =>
     .catch(next)
 
 export const add_message = ({ body, params }, res, next) =>
-    Room.findById(params.id)
+    Room.updateOne({ _id: params.id }, {
+        $push: {
+            messages: body
+        }
+    })
     .then(notFound(res))
     .then((room) => room ? room.view() : null)
     .then(success(res))
