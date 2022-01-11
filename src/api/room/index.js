@@ -6,7 +6,7 @@ import { password, master } from '../../services/passport'
 import Room, { schema } from './model'
 
 const { name, users, messages, picture } = schema.tree
-const { content, senderID, receiverID, isImage } = schema.tree
+const { content, senderID, isImage } = schema.tree
 const router = new Router()
 
 /**
