@@ -45,6 +45,7 @@ router.get('/me',
  * @apiError 404 User not found.
  */
 router.get('/:id',
+    master(),
     show)
 
 /**
