@@ -91,31 +91,6 @@ io.on('connection', function(socket) {
     })
 
     /**
-     * @param{
-     *      roomID: String,
-     *      
-     * }
-     * 
-     * TODO: Fetch Message
-     */
-    socket.on('fetch_message', async(data) => {
-        var roomID = data.roomID
-
-        // Find room by ID
-        let room = await Room.findOne({ _id: roomID }, {});
-
-        /**
-         * Room found
-         */
-        if (room) {
-            socket.emit('')
-
-        } else {
-            socket.emit('')
-        }
-    })
-
-    /**
      * @implements receive send from Client, save to database and send notification to receiver 
      * @param{
      *  roomID      : String,
@@ -128,9 +103,7 @@ io.on('connection', function(socket) {
      * TODO: Send Message to receiver
      */
     socket.on('send_message', async(message) => {
-        let defaultRoomID = ''
 
-        let receiverID = message.receiverID
         let senderID = message.senderID
         let roomID = message.roomID
         let content = message.content
@@ -138,65 +111,21 @@ io.on('connection', function(socket) {
 
         let newMessage = {
             sender: senderID,
-            receiver: receiverID,
             content: content,
             isImage: false
         }
 
+        let dataMessage = { roomID: roomID, senderID: senderID, message: newMessage }
+
+        /// Send to client - sender
+        socket.emit('send_message_successfully', dataMessage)
+
+        /// Send to client of friends - receiver
         /**
-         * ? Room not be created
+         * @emits receive_message
          */
-        if (roomID === defaultRoomID) {
-            /// Initialize new room to insert message
-            let newRoom = {
-                    users: [senderID, receiverID],
-                    message: [newMessage]
-                }
-                /// Create new Room
-            var createRoom = Room.insertOne(newRoom)
+        io.to(receiverID).emit('receive_message', dataMessage)
 
-            /// Create room successfully
-            if (createRoom) {
-                /// ID Room 
-                let newRoomID = createRoom.insertedId
-
-                let dataRoom = { roomID: newRoomID, users: [senderID, receiverID], message: newMessage }
-
-                /// Send to client
-                socket.emit('send_message_successfully', dataRoom)
-
-                /// Send to client of friends
-                /**
-                 * @emits receive_message
-                 */
-                io.to(receiverID).emit('receive_message', dataRoom)
-            }
-        } else {
-            // Insert message
-            Room.findById(roomID, async(err, room) => {
-                if (err) {
-                    throw err;
-                }
-
-                // Update Messages - Push message to messages of Room
-                let res = await Room.updateOne({ _id: ObjectId(roomID) }, { $push: { messages: newMessage } })
-
-                // Update Successfully
-                if (res) {
-
-                    let dataMessage = { roomID: roomID, users: [senderID, receiverID], message: newMessage }
-
-                    /// Send to client - sender
-                    socket.emit('send_message_successfully', dataMessage)
-
-                    /// Send to client of friends - receiver
-                    /**
-                     * @emits receive_message
-                     */
-                    io.to(receiverID).emit('receive_message', dataMessage)
-                }
-            })
-        }
     })
 
     /**

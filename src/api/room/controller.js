@@ -17,7 +17,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
 export const show = ({ params }, res, next) =>
     Room.findById(params.id)
     .then(notFound(res))
-    .then((room) => room ? room.view() : null)
+    .then((room) => room ? res.json(room.view()) : null)
     .then(success(res))
     .catch(next)
 
