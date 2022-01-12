@@ -111,20 +111,19 @@ io.on('connection', function(socket) {
 
         await Room.findOne({ _id: ObjectId(roomID) }, (err, room) => {
                 /// Found Room
-                let message = {
+                let messageData = {
                     senderID: senderID,
                     content: content,
                     isImage: isImage,
                 }
 
-                let room = {
+                let roomData = {
                     id: roomID,
                     name: room.name,
                     picture: room.picture
                 }
 
-                let dataMessage = { room: room, message: message }
-
+                let dataMessage = { room: roomData, message: messageData }
 
                 if (roomID == "61d5204483cef30016d260f6") {
                     io.sockets.emit('receive_message', dataMessage)
