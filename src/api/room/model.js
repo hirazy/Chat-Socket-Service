@@ -18,7 +18,20 @@ const roomSchema = new Schema({
      * isImage: Boolean
      * createdAt: String of time    
      */
-    messages: [],
+    messages: [{
+        "content": {
+            "description": "Content of messsage",
+            type: String
+        },
+        "senderID": {
+            "description": "ID of user who send message",
+            type: String
+        },
+        "isImage": {
+            "description": "check is image or text message",
+            type: Boolean
+        }
+    }],
     picture: {
         type: String,
         trim: true

@@ -109,23 +109,40 @@ io.on('connection', function(socket) {
         let content = message.content
         let isImage = message.isImage
 
-        let newMessage = {
-            sender: senderID,
-            content: content,
-            isImage: false
-        }
+        await Room.findOne({ _id: ObjectId(roomID) })
+            .then((room) => {
+                /// Found Room
+                let message = {
+                    senderID: senderID,
+                    content: content,
+                    isImage: isImage,
+                }
 
-        let dataMessage = { roomID: roomID, senderID: senderID, message: newMessage }
+                let room = {
+                    id: roomID,
+                    name: room.name,
+                    picture: room.picture
+                }
 
-        /// Send to client - sender
-        socket.emit('send_message_successfully', dataMessage)
+                let dataMessage = { room: room, message: message }
 
-        /// Send to client of friends - receiver
-        /**
-         * @emits receive_message
-         */
-        io.to(receiverID).emit('receive_message', dataMessage)
 
+                if (roomID == "61d5204483cef30016d260f6") {
+                    io.sockets.emit('receive_message', dataMessage)
+                } else {
+                    /// Send to client - sender
+                    socket.emit('send_message_successfully', dataMessage)
+
+                    /// Send to client of friends - receiver
+                    /**
+                     * @emits receive_message
+                     */
+                    // io.to(receiverID).emit('receive_message', dataMessage)
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     })
 
     /**
