@@ -109,8 +109,7 @@ io.on('connection', function(socket) {
         let content = message.content
         let isImage = message.isImage
 
-        await Room.findOne({ _id: ObjectId(roomID) })
-            .then((room) => {
+        await Room.findOne({ _id: ObjectId(roomID) }, (err, room) => {
                 /// Found Room
                 let message = {
                     senderID: senderID,
