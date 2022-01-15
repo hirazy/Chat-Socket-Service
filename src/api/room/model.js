@@ -30,7 +30,10 @@ const roomSchema = new Schema({
         "isImage": {
             "description": "check is image or text message",
             type: Boolean
-        }
+        },
+        // "createdAt": {
+
+        // }
     }],
     picture: {
         type: String,
@@ -53,7 +56,7 @@ roomSchema.methods = {
             }
             // ...view
             // add properties for a full view
-        let fields = ['name', 'users', 'messages', 'picture']
+        let fields = ['_id', 'name', 'users', 'messages', 'picture']
 
         if (full) {
             fields = [...fields, 'name', 'picture', 'recentMessage']

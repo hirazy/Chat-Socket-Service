@@ -23,7 +23,7 @@ setImmediate(() => {
     })
 })
 
-let io = require("socket.io")(server);
+const io = require("socket.io")(server);
 
 /**
  * @param {senderID, receiverID, roomID, isImage, content}
@@ -50,6 +50,8 @@ io.on('connection', function(socket) {
          * Change Socket ID
          */
         socket.id = data.id
+
+        socket.join(chat.id)
 
         /// Log ID Socket
         console.log("Socket ID " + socket.id)
@@ -94,7 +96,6 @@ io.on('connection', function(socket) {
      * @implements receive send from Client, save to database and send notification to receiver 
      * @param{
      *  roomID      : String,
-     *  receiverID  : String,
      *  senderID    : String,
      *  content     : bool,
      *  isImage     : bool      
@@ -126,8 +127,16 @@ io.on('connection', function(socket) {
                 let dataMessage = { room: roomData, message: messageData }
 
                 if (roomID == "61d5204483cef30016d260f6") {
+                    /// Send all to Server
                     io.sockets.emit('receive_message', dataMessage)
                 } else {
+
+                    for (let i = 0; i < room.users.length; i++) {
+
+                        /// Send to id of socket - users in room
+                        io.to(room.users[i]).emit('receive_message', dataMessage)
+                    }
+
                     /// Send to client - sender
                     socket.emit('send_message_successfully', dataMessage)
 
@@ -139,7 +148,7 @@ io.on('connection', function(socket) {
                 }
             })
             .catch((err) => {
-                console.log(err)
+
             })
     })
 
@@ -147,21 +156,27 @@ io.on('connection', function(socket) {
      * @implements
      * 
      * @param{
-     *      roomID: String,
-     *      content: String
-     *      senderID: String,
-     *      receiverID: String,
-     *      isImage: String
+     * room: {
+     *  id: String,
+     *  name: String,
+     *  picture: String             
      * }
      * 
-     * TODO: Send message image
+     * message: {
+     *  senderID: String,
+     *  content: String,
+     *  isImage: bool
+     * }     
+     *      
+     * } data
+     * 
+     * TODO: Receive event from io and send event new message to 
+     * 
      */
-    socket.on('upload_image', async(data) => {
-        let receiverID = data.receiverID
-        let senderID = data.senderChatID
-        let content = data.content
-        let isImage = data.isImage
+    socket.on('receive_message', (data) => {
 
+        // Send event new message to Client
+        socket.emit('receive_message', data)
     })
 
     /**
@@ -172,9 +187,7 @@ io.on('connection', function(socket) {
      */
     socket.on('add_writing', (data) => {
 
-        var res = {
-
-        }
+        var res = {}
 
         io.to(receiveID).emit('receive_add_writing', res)
     })
@@ -216,70 +229,18 @@ io.on('connection', function(socket) {
      */
     socket.on('receive_remove_writing', (data) => {
 
-        var res = {
-
-        }
+        var res = {}
 
         socket.emit('receive_remove_writing', res)
     })
 
     /**
-     * @implements
-     * 
-     * @param{
-     *      roomID: String
-     *      content: String,
-     *      senderID: String,
-     *      receiverID: String,
-     *      isImage: Boolean
-     * } data
-     * 
-     * TODO: Receive event from io and send event new message to 
-     * 
-     */
-    socket.on('receive_message', (data) => {
-
-        let message = {
-            roomID: data.roomID,
-            content: data.content,
-            senderID: data.senderID,
-            receiverID: data.receiverID,
-            isImage: data.isImage
-        }
-
-        // Send event new message to Client
-        socket.emit('new_message', message)
-    })
-
-    /**
      * DISCONNECT
      */
+    socket.on('disconnect', (data) => {
+
+    })
+
 })
-
-
-/**
- * @param {String} content 
- * @param {String} senderID 
- * @param {String} receiverID 
- * @param {bool} isImage 
- */
-function saveMessage(content, sender, receiver, isImage = false) {
-    var message = new Message(content, sender, receiver, isImage)
-
-    Message.findOne({ _id: sender }, (err, doc) => {
-            if (!doc) {
-                message.save()
-            } else {
-                var receiverIndex = doc.users.findIndex(element => element._id === receiver)
-
-                if (receiverIndex != undefined && receiverIndex != -1) {
-
-                }
-            }
-        })
-        .catch((err) => {
-
-        })
-}
 
 export default app
