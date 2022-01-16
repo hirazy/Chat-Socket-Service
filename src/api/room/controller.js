@@ -18,7 +18,7 @@ export const show = ({ params }, res, next) =>
     Room.findById(params.id)
     .then(notFound(res))
     .then((room) => room ? res.json(room.view()) : null)
-    .then(success(res))
+    // .then(success(res))
     .catch(next)
 
 export const add_message = ({ body, params }, res, next) =>

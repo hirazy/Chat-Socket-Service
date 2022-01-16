@@ -23,224 +23,224 @@ setImmediate(() => {
     })
 })
 
-// const io = require("socket.io")(server);
+const io = require("socket.io")(server);
 
-// /**
-//  * @param {senderID, receiverID, roomID, isImage, content}
-//  * TODO: sign_in, sign_up, log_out, fetch_shuffle, chatID, fetch_message, send_message
-//  */
+/**
+ * @param {senderID, receiverID, roomID, isImage, content}
+ * TODO: sign_in, sign_up, log_out, fetch_shuffle, chatID, fetch_message, send_message
+ */
 
 
-// io.on('connection', function(socket) {
+io.on('connection', function(socket) {
 
-//     /**
-//      * TODO: Event Connect Socket
-//      */
-//     socket.on('connect', (data) => {
-//         console.log("Socket Connect")
-//     })
+    /**
+     * TODO: Event Connect Socket
+     */
+    socket.on('connect', (data) => {
+        console.log("Socket Connect")
+    })
 
-//     /**
-//      * @param{id: String} data
-//      * 
-//      * TODO: Event Login => change socketID
-//      */
-//     socket.on('login', (data) => {
-//         /**
-//          * Change Socket ID
-//          */
-//         socket.id = data.id
+    /**
+     * @param{id: String} data
+     * 
+     * TODO: Event Login => change socketID
+     */
+    socket.on('login', (data) => {
+        /**
+         * Change Socket ID
+         */
+        socket.id = data.id
 
-//         socket.join(chat.id)
+        socket.join(chat.id)
 
-//         /// Log ID Socket
-//         console.log("Socket ID " + socket.id)
-//     })
+        /// Log ID Socket
+        console.log("Socket ID " + socket.id)
+    })
 
-//     /**
-//      * 
-//      * TODO: Logout 
-//      */
-//     socket.on('log_out', (data) => {
-//         // Set id socket empty
-//         socket.id = ''
-//     })
+    /**
+     * 
+     * TODO: Logout 
+     */
+    socket.on('log_out', (data) => {
+        // Set id socket empty
+        socket.id = ''
+    })
 
-//     /**
-//      * Fetch Shuffle on user
-//      * 
-//      * TODO: Get Shuffle
-//      */
-//     socket.on('fetch_shuffle', (data) => {
+    /**
+     * Fetch Shuffle on user
+     * 
+     * TODO: Get Shuffle
+     */
+    socket.on('fetch_shuffle', (data) => {
 
-//     })
+    })
 
-//     /**
-//      * @param{id: String} data
-//      * 
-//      * TODO: 
-//      */
-//     socket.on('chatID', (data) => {
-//         let chatID = data.id
-//         socket.join(chatID)
+    /**
+     * @param{id: String} data
+     * 
+     * TODO: 
+     */
+    socket.on('chatID', (data) => {
+        let chatID = data.id
+        socket.join(chatID)
 
-//         console.log('chatID')
+        console.log('chatID')
 
-//         socket.on('disconnect', function() {
-//             // let rooms = socket.room
-//             socket.leave(chatID)
-//         })
-//     })
+        socket.on('disconnect', function() {
+            // let rooms = socket.room
+            socket.leave(chatID)
+        })
+    })
 
-//     /**
-//      * @implements receive send from Client, save to database and send notification to receiver 
-//      * @param{
-//      *  roomID      : String,
-//      *  senderID    : String,
-//      *  content     : bool,
-//      *  isImage     : bool      
-//      * } message
-//      * 
-//      * TODO: Send Message to receiver
-//      */
-//     socket.on('send_message', async(message) => {
+    /**
+     * @implements receive send from Client, save to database and send notification to receiver 
+     * @param{
+     *  roomID      : String,
+     *  senderID    : String,
+     *  content     : bool,
+     *  isImage     : bool      
+     * } message
+     * 
+     * TODO: Send Message to receiver
+     */
+    socket.on('send_message', async(message) => {
 
-//         let senderID = message.senderID
-//         let roomID = message.roomID
-//         let content = message.content
-//         let isImage = message.isImage
+        let senderID = message.senderID
+        let roomID = message.roomID
+        let content = message.content
+        let isImage = message.isImage
 
-//         await Room.findOne({ _id: ObjectId(roomID) }, (err, room) => {
-//                 /// Found Room
-//                 let messageData = {
-//                     senderID: senderID,
-//                     content: content,
-//                     isImage: isImage,
-//                 }
+        await Room.findOne({ _id: ObjectId(roomID) }, (err, room) => {
+                /// Found Room
+                let messageData = {
+                    senderID: senderID,
+                    content: content,
+                    isImage: isImage,
+                }
 
-//                 let roomData = {
-//                     id: roomID,
-//                     name: room.name,
-//                     picture: room.picture
-//                 }
+                let roomData = {
+                    id: roomID,
+                    name: room.name,
+                    picture: room.picture
+                }
 
-//                 let dataMessage = { room: roomData, message: messageData }
+                let dataMessage = { room: roomData, message: messageData }
 
-//                 if (roomID == "61d5204483cef30016d260f6") {
-//                     /// Send all to Server
-//                     io.sockets.emit('receive_message', dataMessage)
-//                 } else {
+                if (roomID == "61d5204483cef30016d260f6") {
+                    /// Send all to Server
+                    io.sockets.emit('receive_message', dataMessage)
+                } else {
 
-//                     for (let i = 0; i < room.users.length; i++) {
+                    for (let i = 0; i < room.users.length; i++) {
 
-//                         /// Send to id of socket - users in room
-//                         io.to(room.users[i]).emit('receive_message', dataMessage)
-//                     }
+                        /// Send to id of socket - users in room
+                        io.to(room.users[i]).emit('receive_message', dataMessage)
+                    }
 
-//                     /// Send to client - sender
-//                     socket.emit('send_message_successfully', dataMessage)
+                    /// Send to client - sender
+                    socket.emit('send_message_successfully', dataMessage)
 
-//                     /// Send to client of friends - receiver
-//                     /**
-//                      * @emits receive_message
-//                      */
-//                     // io.to(receiverID).emit('receive_message', dataMessage)
-//                 }
-//             })
-//             .catch((err) => {
+                    /// Send to client of friends - receiver
+                    /**
+                     * @emits receive_message
+                     */
+                    // io.to(receiverID).emit('receive_message', dataMessage)
+                }
+            })
+            .catch((err) => {
 
-//             })
-//     })
+            })
+    })
 
-//     /**
-//      * @implements
-//      * 
-//      * @param{
-//      * room: {
-//      *  id: String,
-//      *  name: String,
-//      *  picture: String             
-//      * }
-//      * 
-//      * message: {
-//      *  senderID: String,
-//      *  content: String,
-//      *  isImage: bool
-//      * }     
-//      *      
-//      * } data
-//      * 
-//      * TODO: Receive event from io and send event new message to 
-//      * 
-//      */
-//     socket.on('receive_message', (data) => {
+    /**
+     * @implements
+     * 
+     * @param{
+     * room: {
+     *  id: String,
+     *  name: String,
+     *  picture: String             
+     * }
+     * 
+     * message: {
+     *  senderID: String,
+     *  content: String,
+     *  isImage: bool
+     * }     
+     *      
+     * } data
+     * 
+     * TODO: Receive event from io and send event new message to 
+     * 
+     */
+    socket.on('receive_message', (data) => {
 
-//         // Send event new message to Client
-//         socket.emit('receive_message', data)
-//     })
+        // Send event new message to Client
+        socket.emit('receive_message', data)
+    })
 
-//     /**
-//      * @implements
-//      * @param{
-//      *      receiverID: String
-//      * }
-//      */
-//     socket.on('add_writing', (data) => {
+    /**
+     * @implements
+     * @param{
+     *      receiverID: String
+     * }
+     */
+    socket.on('add_writing', (data) => {
 
-//         var res = {}
+        var res = {}
 
-//         io.to(receiveID).emit('receive_add_writing', res)
-//     })
+        io.to(receiveID).emit('receive_add_writing', res)
+    })
 
-//     /**
-//      * @implements
-//      * @param{
-//      *      receiveID: String
-//      * }
-//      */
-//     socket.on('remove_writing', (data) => {
+    /**
+     * @implements
+     * @param{
+     *      receiveID: String
+     * }
+     */
+    socket.on('remove_writing', (data) => {
 
-//         var res = {
-//             receiveID: data.receiveID
-//         }
+        var res = {
+            receiveID: data.receiveID
+        }
 
-//         // 
-//         io.to(receiveID).emit('receive_remove_writing', res)
-//     })
+        // 
+        io.to(receiveID).emit('receive_remove_writing', res)
+    })
 
-//     /**
-//      * @param{
-//      *      receiverID: String
-//      *      
-//      * }
-//      */
-//     socket.on('receive_add_writing', (data) => {
-//         var res = {
-//             receiveID: data.receiverID
-//         }
+    /**
+     * @param{
+     *      receiverID: String
+     *      
+     * }
+     */
+    socket.on('receive_add_writing', (data) => {
+        var res = {
+            receiveID: data.receiverID
+        }
 
-//         socket.emit('receive_add_writing', res)
-//     })
+        socket.emit('receive_add_writing', res)
+    })
 
-//     /**
-//      * @param{
-//      *      receiverID: String
-//      * }
-//      */
-//     socket.on('receive_remove_writing', (data) => {
+    /**
+     * @param{
+     *      receiverID: String
+     * }
+     */
+    socket.on('receive_remove_writing', (data) => {
 
-//         var res = {}
+        var res = {}
 
-//         socket.emit('receive_remove_writing', res)
-//     })
+        socket.emit('receive_remove_writing', res)
+    })
 
-//     /**
-//      * DISCONNECT
-//      */
-//     socket.on('disconnect', (data) => {
+    /**
+     * DISCONNECT
+     */
+    socket.on('disconnect', (data) => {
 
-//     })
+    })
 
-// })
+})
 
 export default app
