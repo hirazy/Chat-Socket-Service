@@ -56,7 +56,7 @@ var upload = multer({
  */
 router.post('/', master(), (req, res) => {
 
-    upload(req.image, res, function(err) {
+    upload(req.body.image, res, function(err) {
 
         if (err) {
             notFound(res)
