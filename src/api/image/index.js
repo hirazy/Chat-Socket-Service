@@ -1,5 +1,7 @@
 import { Router } from 'express'
+import { success, notFound } from '../../services/response/'
 import { password, master } from '../../services/passport'
+
 const multer = require('multer');
 const router = new Router()
 
@@ -72,7 +74,7 @@ router.post('/', master(), (req, res) => {
     upload(req, res, function(err) {
 
         if (err) {
-            res.status(400).err(err)
+            notFound(res)
         } else {
 
             // SUCCESS, image successfully uploaded
