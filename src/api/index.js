@@ -5,6 +5,7 @@ import passwordReset from './password-reset'
 import someEntity from './some-entity'
 import message from './message'
 import room from './room'
+import image from './image'
 
 const router = new Router()
 
@@ -37,5 +38,6 @@ router.use('/password-resets', passwordReset)
 router.use('/some-entities', someEntity)
 router.use('/messages', message)
 router.use('/rooms', room)
+router.use('/images', image)
 
 export default router
