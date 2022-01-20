@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { password, master } from '../../services/passport'
-
+const multer = require('multer');
 const router = new Router()
 
 var storage = multer.diskStorage({
