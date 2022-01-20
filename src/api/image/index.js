@@ -9,7 +9,7 @@ var storage = multer.diskStorage({
     destination: function(req, file, cb) {
 
         // Uploads is the Upload_folder_name
-        cb(null, "uploads")
+        cb(null, "./uploads")
     },
     filename: function(req, file, cb) {
         cb(null, file.fieldname + "-" + Date.now() + ".jpg")
@@ -54,24 +54,9 @@ var upload = multer({
  * @apiSuccess (Success 201) {Object} user Current user's data.
  * @apiError 401 Master access only or invalid credentials.
  */
-router.get('/',
-    master(),
-    upload)
-
-/**
- * @api {post} /image Upload image
- * @apiName Authenticate
- * @apiGroup Auth
- * @apiPermission master
- * @apiHeader {String} Authorization Basic authorization with email and password.
- * @apiParam {String} access_token Master access_token.
- * @apiSuccess (Success 201) {String} token User `access_token` to be passed to other requests.
- * @apiSuccess (Success 201) {Object} user Current user's data.
- * @apiError 401 Master access only or invalid credentials.
- */
 router.post('/', master(), (req, res) => {
 
-    upload(req, res, function(err) {
+    upload(req.image, res, function(err) {
 
         if (err) {
             notFound(res)
