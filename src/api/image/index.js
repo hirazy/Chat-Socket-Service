@@ -67,7 +67,7 @@ router.get('/',
  * @apiSuccess (Success 201) {Object} user Current user's data.
  * @apiError 401 Master access only or invalid credentials.
  */
-router.post('/', upload.array('photos', 12), (req, res) => {
+router.post('/', (req, res) => {
 
     upload(req, res, function(err) {
 
