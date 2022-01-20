@@ -67,17 +67,16 @@ router.get('/',
  * @apiSuccess (Success 201) {Object} user Current user's data.
  * @apiError 401 Master access only or invalid credentials.
  */
-router.post('/', (req, res) => {
+router.post('/', master(), (req, res) => {
 
     upload(req, res, function(err) {
 
         if (err) {
-
-            res.send(err)
+            res.status(400).err(err)
         } else {
 
             // SUCCESS, image successfully uploaded
-            res.send("Success, Image uploaded!")
+            success(res, 201)
         }
     })
 
