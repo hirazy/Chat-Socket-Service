@@ -5,6 +5,7 @@ import { password, master } from '../../services/passport'
 const multer = require('multer');
 const upload = require('../uploadMiddleware');
 const Resize = require('../Resize');
+const path = require('path');
 
 const router = new Router()
 
