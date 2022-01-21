@@ -55,7 +55,7 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({ storage }); // or simply { dest: 'uploads/' }
+const upload = multer({ storage }).single('userPhoto');; // or simply { dest: 'uploads/' }
 
 /**
  * @api {post} /image Upload image
