@@ -57,7 +57,7 @@ const router = new Router()
  * @apiSuccess (Success 201) {Object} user Current user's data.
  * @apiError 401 Master access only or invalid credentials.
  */
-router.post('/', master(), upload.single('image'), (req, res) => {
+router.post('/', master(), upload.single('image'), async(req, res) => {
 
     const imagePath = path.join(__dirname, '/uploads');
     // call class Resize
