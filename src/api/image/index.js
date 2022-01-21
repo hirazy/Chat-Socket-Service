@@ -73,6 +73,8 @@ router.get('/', master(), (req, res) => {
 
     var filePath = path.join(__dirname, "/uploads/" + action).split("%20").join(" ");
 
+    console.log("Hello 123 " + filePath)
+
     // Checking if the path exists
     fs.exists(filePath, function(exists) {
         if (!exists) {
