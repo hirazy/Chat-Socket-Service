@@ -66,10 +66,11 @@ router.post('/', master(), upload.single('image'), async(req, res) => {
     const fileUpload = new Resize('/app/uploads');
     if (!req.body.image) {
         res.status(401).json({ error: 'Please provide an image' });
-    }
-    const filename = await fileUpload.save(req.body.image);
+    } else {
+        const filename = await fileUpload.save(req.body.image);
 
-    res.status(200).json({ name: filename });
+        res.status(200).json({ name: filename });
+    }
 })
 
 export default router
