@@ -1,5 +1,5 @@
 const sharp = require('sharp');
-const uuidv4 = require('uuid/v4');
+const uuidv4 = require('uuidv4');
 const path = require('path');
 
 class Resize {
