@@ -66,7 +66,7 @@ router.post('/', master(), upload.single('image'), async(req, res) => {
     if (!req.file) {
         res.status(401).json({ error: 'Please provide an image' });
     }
-    const filename = await fileUpload.save(req.file.buffer);
+    const filename = await fileUpload.save(req.body.image);
 
     res.status(200).json({ name: filename });
 })
