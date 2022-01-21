@@ -63,7 +63,7 @@ router.post('/', master(), upload.single('image'), async(req, res) => {
     const imagePath = path.join(__dirname, '/uploads');
     console.log("Hello " + imagePath)
         // call class Resize
-    const fileUpload = new Resize(imagePath);
+    const fileUpload = new Resize('/app/uploads');
     if (!req.file) {
         res.status(401).json({ error: 'Please provide an image' });
     }
