@@ -61,7 +61,7 @@ const router = new Router()
 router.post('/', master(), upload.single('image'), async(req, res) => {
 
     const imagePath = path.join(__dirname, '/uploads');
-    console.log("Hello " + req.file)
+    console.log("Hello " + req.body)
         // call class Resize
     const fileUpload = new Resize('/app/uploads');
     if (!req.file) {
