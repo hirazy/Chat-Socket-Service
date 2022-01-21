@@ -49,19 +49,19 @@ const router = new Router()
 
 /**
  * @api {post} /image Upload image
- * @apiName Authenticate
- * @apiGroup Auth
+ * @apiName Upload Image
+ * @apiGroup Image
  * @apiPermission master
- * @apiHeader {String} Authorization Basic authorization with email and password.
+ * @apiHeader {String} Upload image to folder /uploads 
  * @apiParam {String} access_token Master access_token.
- * @apiSuccess (Success 201) {String} token User `access_token` to be passed to other requests.
+ * @apiSuccess (Success 201) {String} name of saved file to be passed to other requests.
  * @apiSuccess (Success 201) {Object} user Current user's data.
  * @apiError 401 Master access only or invalid credentials.
  */
 router.post('/', master(), upload.single('image'), async(req, res) => {
 
     const imagePath = path.join(__dirname, '/uploads');
-    console.log("Hello " + req.body)
+    console.log("Hello " + req.file)
         // call class Resize
     const fileUpload = new Resize('/app/uploads');
     if (!req.file) {
