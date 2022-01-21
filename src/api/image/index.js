@@ -61,13 +61,13 @@ const router = new Router()
 router.post('/', master(), upload.single('image'), async(req, res) => {
 
     const imagePath = path.join(__dirname, '/uploads');
-    console.log("Hello " + req.body.image)
+    console.log("Hello " + req.file)
         // call class Resize
     const fileUpload = new Resize('/app/uploads');
-    if (!req.body.image) {
+    if (!req.file) {
         res.status(401).json({ error: 'Please provide an image' });
     } else {
-        const filename = await fileUpload.save(req.body.image);
+        const filename = await fileUpload.save(req.file);
 
         res.status(200).json({ name: filename });
     }
