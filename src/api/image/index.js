@@ -68,8 +68,8 @@ var upload = multer({ storage: storage });
  * @apiSuccess (Success 201) {Object} user Current user's data.
  * @apiError 401 Master access only or invalid credentials.
  */
-router.get('/', master(), (req, res) => {
-    var action = req.body.path;
+router.get('/:path', master(), (req, res) => {
+    var action = req.params.path;
 
     var filePath = path.join(__dirname, "/uploads/" + action).split("%20").join(" ");
 
