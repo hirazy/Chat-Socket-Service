@@ -3,7 +3,6 @@ import { success, notFound } from '../../services/response/'
 import { password, master } from '../../services/passport'
 
 const fs = require("fs");
-const multer = require('multer');
 // const upload = require('../uploadMiddleware');
 // const Resize = require('../Resize');
 const path = require('path');
