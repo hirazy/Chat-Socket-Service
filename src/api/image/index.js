@@ -3,22 +3,22 @@ import { success, notFound } from '../../services/response/'
 import { password, master } from '../../services/passport'
 
 const fs = require("fs");
-// const upload = require('../uploadMiddleware');
-// const Resize = require('../Resize');
+const upload = require('../uploadMiddleware');
+const Resize = require('../Resize');
 const path = require('path');
 
 const router = new Router()
 
-var multer = require('multer')
-var storage = multer.diskStorage({
-    destination: function(req, file, callback) {
-        callback(null, './uploads');
-    },
-    filename: function(req, file, callback) {
-        callback(null, Date.now() + '-' + file.originalname);
-    }
-});
-var upload = multer({ storage: storage });
+// var multer = require('multer')
+// var storage = multer.diskStorage({
+//     destination: function(req, file, callback) {
+//         callback(null, './uploads');
+//     },
+//     filename: function(req, file, callback) {
+//         callback(null, Date.now() + '-' + file.originalname);
+//     }
+// });
+// var upload = multer({ storage: storage });
 
 // var storage = multer.diskStorage({
 //     destination: function(req, file, cb) {
@@ -118,9 +118,9 @@ router.get('/:path', (req, res) => {
  */
 router.post('/', master(), upload.single('image'), async(req, res) => {
 
-    // const imagePath = path.join(__dirname, '/uploads');
+    const imagePath = path.join(__dirname, '/uploads');
     // // call class Resize
-    // const fileUpload = new Resize(imagePath);
+    const fileUpload = new Resize(imagePath);
     if (!req.file) {
         res.status(401).json({ error: 'Please provide an image' });
     } else {
