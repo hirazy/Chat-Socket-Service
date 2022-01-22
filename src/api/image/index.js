@@ -71,7 +71,7 @@ var upload = multer({ storage: storage });
 router.get('/:path', (req, res) => {
     var action = req.params.path;
 
-    var filePath = path.join(__dirname, "/uploads/" + action + ".PNG").split("%20").join(" ");
+    var filePath = path.join(__dirname, "/uploads/" + action).split("%20").join(" ");
 
     console.log("Hello 123 " + filePath)
 
