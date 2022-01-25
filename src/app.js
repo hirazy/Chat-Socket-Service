@@ -114,6 +114,8 @@ io.on('connection', function(socket) {
         let content = message.content
         let isImage = message.isImage
 
+        console.log('Sender ID ' + senderID)
+
         await Room.findOne({ _id: ObjectId(roomID) }, (err, room) => {
                 /// Found Room
                 let messageData = {
