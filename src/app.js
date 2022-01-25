@@ -5,7 +5,7 @@ import express from './services/express'
 import api from './api'
 const User = require('./api/user/model')
 const Message = require('./api/message/model')
-const Room, { schema } = require('./api/room/model')
+import Room, { schema } from './api/message/model'
 
 const ObjectId = require('mongodb').ObjectID
 
