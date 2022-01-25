@@ -23,7 +23,9 @@ setImmediate(() => {
     })
 })
 
-const io = require("socket.io")(server);
+io = require('socket.io').listen(server)
+
+// const io = require("socket.io")(server, { 'transports': ['websocket', 'polling'] });
 
 /**
  * @param {senderID, receiverID, roomID, isImage, content}
@@ -51,7 +53,7 @@ io.on('connection', function(socket) {
          */
         socket.id = data.id
 
-        socket.join(chat.id)
+        socket.join(data.id)
 
         /// Log ID Socket
         console.log("Socket ID " + socket.id)
@@ -64,6 +66,8 @@ io.on('connection', function(socket) {
     socket.on('log_out', (data) => {
         // Set id socket empty
         socket.id = ''
+
+        socket.join('')
     })
 
     /**
