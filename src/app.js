@@ -12,7 +12,7 @@ const ObjectId = require('mongodb').ObjectID
 const app = express(apiRoot, api)
 const server = http.createServer(app)
 
-global.io = require("socket.io")(server, { 'transports': ['websocket', 'polling'] });
+const io = require("socket.io")(server);
 
 if (mongo.uri) {
     mongoose.connect(mongo.uri)
@@ -34,7 +34,7 @@ setImmediate(() => {
  */
 
 
-global.io.on('connection', function(socket) {
+io.on('connection', function(socket) {
 
     /**
      * TODO: Event Connect Socket
@@ -247,5 +247,7 @@ global.io.on('connection', function(socket) {
     })
 
 })
+
+server.listen(8080)
 
 export default app
