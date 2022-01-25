@@ -12,6 +12,8 @@ const ObjectId = require('mongodb').ObjectID
 const app = express(apiRoot, api)
 const server = http.createServer(app)
 
+const io = require("socket.io")(server, { 'transports': ['websocket', 'polling'] });
+
 if (mongo.uri) {
     mongoose.connect(mongo.uri)
 }
@@ -25,7 +27,6 @@ setImmediate(() => {
 
 // const io = require('socket.io').listen(server)
 
-const io = require("socket.io")(server, { 'transports': ['websocket', 'polling'] });
 
 /**
  * @param {senderID, receiverID, roomID, isImage, content}
