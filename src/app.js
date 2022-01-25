@@ -12,7 +12,7 @@ const ObjectId = require('mongodb').ObjectID
 const app = express(apiRoot, api)
 const server = http.createServer(app)
 
-const io = require("socket.io")(server, { 'transports': ['websocket', 'polling'] });
+let io = require("socket.io")(server, { 'transports': ['websocket', 'polling'] });
 
 if (mongo.uri) {
     mongoose.connect(mongo.uri)
