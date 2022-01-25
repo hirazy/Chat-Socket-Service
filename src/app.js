@@ -23,9 +23,9 @@ setImmediate(() => {
     })
 })
 
-io = require('socket.io').listen(server)
+// const io = require('socket.io').listen(server)
 
-// const io = require("socket.io")(server, { 'transports': ['websocket', 'polling'] });
+const io = require("socket.io")(server, { 'transports': ['websocket', 'polling'] });
 
 /**
  * @param {senderID, receiverID, roomID, isImage, content}
