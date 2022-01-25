@@ -22,6 +22,12 @@ mongoose.Promise = Promise
 setImmediate(() => {
     server.listen(port, ip, () => {
         console.log('Express server listening on http://%s:%d, in %s mode', ip, port, env)
+
+        io.on('connection', function(socket) {
+            console.log('Connected')
+
+
+        })
     })
 })
 
