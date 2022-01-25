@@ -20,9 +20,10 @@ if (mongo.uri) {
 mongoose.Promise = Promise
 
 setImmediate(() => {
-    server.listen(port, ip, () => {
-        console.log('Express server listening on http://%s:%d, in %s mode', ip, port, env)
-    })
+    // server.listen(port, ip, () => {
+    //     console.log('Express server listening on http://%s:%d, in %s mode', ip, port, env)
+    // })
+    server.listen(8080)
 })
 
 // const io = require('socket.io').listen(server)
@@ -32,7 +33,6 @@ setImmediate(() => {
  * @param {senderID, receiverID, roomID, isImage, content}
  * TODO: sign_in, sign_up, log_out, fetch_shuffle, chatID, fetch_message, send_message
  */
-
 
 io.on('connection', function(socket) {
 
