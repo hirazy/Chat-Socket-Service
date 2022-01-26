@@ -117,45 +117,46 @@ io.on('connection', function(socket) {
         let isImage = message.isImage
 
         await Room.findOne({ _id: ObjectId(roomID) }, (err, room) => {
-                /// Found Room
-                let messageData = {
-                    senderID: senderID,
-                    content: content,
-                    isImage: isImage,
+            if (err) {
+                throw err;
+            }
+
+            /// Found Room
+            let messageData = {
+                senderID: senderID,
+                content: content,
+                isImage: isImage,
+            }
+
+            let roomData = {
+                id: roomID,
+                name: room.name,
+                picture: room.picture
+            }
+
+            let dataMessage = { room: roomData, message: messageData }
+
+            if (roomID == "61d5204483cef30016d260f6") {
+                /// Send all to Server
+                io.sockets.emit('receive_message', dataMessage)
+            } else {
+
+                for (let i = 0; i < room.users.length; i++) {
+
+                    /// Send to id of socket - users in room
+                    io.to(room.users[i]).emit('receive_message', dataMessage)
                 }
 
-                let roomData = {
-                    id: roomID,
-                    name: room.name,
-                    picture: room.picture
-                }
+                /// Send to client - sender
+                socket.emit('send_message_successfully', dataMessage)
 
-                let dataMessage = { room: roomData, message: messageData }
-
-                if (roomID == "61d5204483cef30016d260f6") {
-                    /// Send all to Server
-                    io.sockets.emit('receive_message', dataMessage)
-                } else {
-
-                    for (let i = 0; i < room.users.length; i++) {
-
-                        /// Send to id of socket - users in room
-                        io.to(room.users[i]).emit('receive_message', dataMessage)
-                    }
-
-                    /// Send to client - sender
-                    socket.emit('send_message_successfully', dataMessage)
-
-                    /// Send to client of friends - receiver
-                    /**
-                     * @emits receive_message
-                     */
-                    // io.to(receiverID).emit('receive_message', dataMessage)
-                }
-            })
-            .catch((err) => {
-
-            })
+                /// Send to client of friends - receiver
+                /**
+                 * @emits receive_message
+                 */
+                // io.to(receiverID).emit('receive_message', dataMessage)
+            }
+        })
     })
 
     /**
