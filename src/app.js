@@ -63,11 +63,14 @@ io.on('connection', function(socket) {
      * 
      * TODO: Logout 
      */
-    socket.on('log_out', (data) => {
+    socket.on('logout', (data) => {
+
+        console.log('Logout ' + socket.id)
+
         // Set id socket empty
         socket.id = ''
 
-        socket.join('')
+        socket.disconnect()
     })
 
     /**
