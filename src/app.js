@@ -109,7 +109,7 @@ io.on('connection', function(socket) {
      */
     socket.on('send_message', async(message) => {
 
-        console.log('Sender ID ' + message)
+        console.log('Sender ID ' + message.roomID)
 
         let senderID = message.senderID
         let roomID = message.roomID
