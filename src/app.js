@@ -4,8 +4,8 @@ import mongoose from './services/mongoose'
 import express from './services/express'
 import api from './api'
 
-import User, { schema } from './api/user/model'
-import Room, { schema } from './api/message/model'
+import User, { schemaUser } from './api/user/model'
+import Room, { schemaRoom } from './api/message/model'
 
 const ObjectId = require('mongodb').ObjectID
 
