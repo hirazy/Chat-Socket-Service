@@ -3,8 +3,8 @@ import { env, mongo, port, ip, apiRoot } from './config'
 import mongoose from './services/mongoose'
 import express from './services/express'
 import api from './api'
-const User = require('./api/user/model')
-const Message = require('./api/message/model')
+
+import User, { schema } from './api/user/model'
 import Room, { schema } from './api/message/model'
 
 const ObjectId = require('mongodb').ObjectID
@@ -107,21 +107,15 @@ io.on('connection', function(socket) {
      * 
      * TODO: Send Message to receiver
      */
-    socket.on('send_message', async(message) => {
-
-        console.log('Room ID ' + message.roomID)
+    socket.on('send_message', (message) => {
 
         let senderID = message.senderID
         let roomID = message.roomID
         let content = message.content
         let isImage = message.isImage
 
-        await Room.findOne({ _id: ObjectId(roomID) }, (err, room) => {
-            if (err) {
-                console.log("Error " + err)
-            }
-
-            console.log(room)
+        Room.findOne({ _id: ObjectId(roomID) }, (err, room) => {
+            if (err) throw err;
 
             /// Found Room
             let messageData = {
