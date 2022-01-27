@@ -136,7 +136,7 @@ io.on('connection', function(socket) {
         var notification = {
             notification: {
                 title: 'Message from node',
-                body: 'hey there'
+                body: message.content
             },
             // topic: 'topic'
         };
