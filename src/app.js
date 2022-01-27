@@ -147,51 +147,51 @@ io.on('connection', function(socket) {
         };
 
         admin.messaging().sendToDevice(deviceTest, notification, notification_options).then((response) => {
-
+                console.log(response)
             })
             .catch((err) => {
 
             })
 
         Room.findOne({ _id: ObjectId(roomID) }, (err, room) => {
-            if (err) throw err;
+            // if (err) throw err;
 
-            /// Found Room
-            let messageData = {
-                senderID: senderID,
-                content: content,
-                isImage: isImage,
-            }
+            // /// Found Room
+            // let messageData = {
+            //     senderID: senderID,
+            //     content: content,
+            //     isImage: isImage,
+            // }
 
-            let roomData = {
-                id: roomID,
-                name: room.name,
-                picture: room.picture
-            }
+            // let roomData = {
+            //     id: roomID,
+            //     name: room.name,
+            //     picture: room.picture
+            // }
 
-            let dataMessage = { room: roomData, message: messageData }
+            // let dataMessage = { room: roomData, message: messageData }
 
-            if (roomID == "61d5204483cef30016d260f6") {
-                /// Send all to Server
-                // io.sockets.emit('receive_message', dataMessage)
+            // if (roomID == "61d5204483cef30016d260f6") {
+            //     /// Send all to Server
+            //     // io.sockets.emit('receive_message', dataMessage)
 
-            } else {
+            // } else {
 
-                for (let i = 0; i < room.users.length; i++) {
+            //     for (let i = 0; i < room.users.length; i++) {
 
-                    /// Send to id of socket - users in room
-                    io.to(room.users[i]).emit('receive_message', dataMessage)
-                }
+            //         /// Send to id of socket - users in room
+            //         io.to(room.users[i]).emit('receive_message', dataMessage)
+            //     }
 
-                /// Send to client - sender
-                socket.emit('send_message_successfully', dataMessage)
+            //     /// Send to client - sender
+            //     socket.emit('send_message_successfully', dataMessage)
 
-                /// Send to client of friends - receiver
-                /**
-                 * @emits receive_message
-                 */
-                // io.to(receiverID).emit('receive_message', dataMessage)
-            }
+            //     /// Send to client of friends - receiver
+            //     /**
+            //      * @emits receive_message
+            //      */
+            //     // io.to(receiverID).emit('receive_message', dataMessage)
+            // }
         })
     })
 
