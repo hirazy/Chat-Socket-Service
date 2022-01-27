@@ -3,6 +3,7 @@ import { env, mongo, port, ip, apiRoot } from './config'
 import mongoose from './services/mongoose'
 import express from './services/express'
 import api from './api'
+import { getMessaging } from "firebase/messaging";
 
 import User, { schemaUser } from './api/user/model'
 import Room, { schemaRoom } from './api/message/model'
@@ -12,7 +13,21 @@ const ObjectId = require('mongodb').ObjectID
 const app = express(apiRoot, api)
 const server = http.createServer(app)
 
+// IO
 const io = require("socket.io")(server);
+
+// Admin Firebase
+var admin = require("firebase-admin");
+var serviceAccount = require("./serviceAccountKey.json");
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
+
+const deviceTest = 'd1l_T_hOSnK-OVtrs4_fCs:APA91bGq4E7k_pI6SpYvn-INZJzxHJgaivQo4iK5EXUqbmUhhIAbdlF3NpIusnR81lxhwylHWx5wN28RoMC4KXddEM0X3RccI3JUk1NYycTJp1Hml_NawdKmfPPUFMZgY_h9nvZRkxnX'
+
+// Server Key Firebase
+const server_key = 'AAAAwpR-8BI:APA91bGu43MO0MRqIDflM6CmPB-5-zVC-IUXmcIYk6mjAVo-vphgNbUkf_j1fPsqcL1RcVMhuZIKIVJDFgTtcLaiG4ahr-LGGzRDGhUNn83MFK2-_TcL2m3x2gufdwaz80mofNUqsefx'
 
 if (mongo.uri) {
     mongoose.connect(mongo.uri)
@@ -70,6 +85,7 @@ io.on('connection', function(socket) {
         // Set id socket empty
         socket.id = ''
 
+        // Socket disconnect
         socket.disconnect()
     })
 
@@ -117,6 +133,26 @@ io.on('connection', function(socket) {
         let content = message.content
         let isImage = message.isImage
 
+        var notification = {
+            notification: {
+                title: 'Message from node',
+                body: 'hey there'
+            },
+            topic: 'topic'
+        };
+
+        const notification_options = {
+            priority: "high",
+            timeToLive: 60 * 60 * 24
+        };
+
+        admin.messaging().sendToDevice(deviceTest, notification, notification_options).then((response) => {
+
+            })
+            .catch((err) => {
+
+            })
+
         Room.findOne({ _id: ObjectId(roomID) }, (err, room) => {
             if (err) throw err;
 
@@ -137,7 +173,8 @@ io.on('connection', function(socket) {
 
             if (roomID == "61d5204483cef30016d260f6") {
                 /// Send all to Server
-                io.sockets.emit('receive_message', dataMessage)
+                // io.sockets.emit('receive_message', dataMessage)
+
             } else {
 
                 for (let i = 0; i < room.users.length; i++) {
