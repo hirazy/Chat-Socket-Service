@@ -138,7 +138,7 @@ io.on('connection', function(socket) {
                 title: 'Message from node',
                 body: 'hey there'
             },
-            topic: 'topic'
+            // topic: 'topic'
         };
 
         const notification_options = {
@@ -150,7 +150,7 @@ io.on('connection', function(socket) {
                 console.log(response)
             })
             .catch((err) => {
-
+                console.log(err)
             })
 
         Room.findOne({ _id: ObjectId(roomID) }, (err, room) => {
