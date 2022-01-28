@@ -155,13 +155,13 @@ io.on('connection', function(socket) {
 
         Room.findOne({ _id: ObjectId(roomID) }, (err, room) => {
             // if (err) throw err;
-
-            // /// Found Room
-            // let messageData = {
-            //     senderID: senderID,
-            //     content: content,
-            //     isImage: isImage,
-            // }
+            console.log(room + roomID)
+                // /// Found Room
+                // let messageData = {
+                //     senderID: senderID,
+                //     content: content,
+                //     isImage: isImage,
+                // }
 
             // let roomData = {
             //     id: roomID,
