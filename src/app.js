@@ -157,19 +157,19 @@ io.on('connection', function(socket) {
             // if (err) throw err;
             console.log(room + roomID)
                 // /// Found Room
-                // let messageData = {
-                //     senderID: senderID,
-                //     content: content,
-                //     isImage: isImage,
-                // }
+            let messageData = {
+                senderID: senderID,
+                content: content,
+                isImage: isImage,
+            }
 
-            // let roomData = {
-            //     id: roomID,
-            //     name: room.name,
-            //     picture: room.picture
-            // }
+            let roomData = {
+                id: roomID,
+                name: room.name,
+                picture: room.picture
+            }
 
-            // let dataMessage = { room: roomData, message: messageData }
+            let dataMessage = { room: roomData, message: messageData }
 
             // if (roomID == "61d5204483cef30016d260f6") {
             //     /// Send all to Server
