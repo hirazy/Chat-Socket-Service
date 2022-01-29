@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
 import { password as passwordAuth, master, token } from '../../services/passport'
-import { index, showMe, show, create, update, updatePassword, destroy } from './controller'
+import { index, showMe, show, create, update, updatePassword, updateToken, destroy } from './controller'
 import User, { schema } from './model'
 
 const router = new Router()
@@ -102,6 +102,39 @@ router.put('/:id/password',
     passwordAuth(),
     body({ password }),
     updatePassword)
+
+/**
+ * @api {put} /users/:id/token Update => Store Device Token
+ * @apiName UpdateToken
+ * @apiGroup User
+ * @apiHeader {String} Authorization Basic authorization with email and password.
+ * @apiParam {String{6..}} password User's new password.
+ * @apiSuccess (Success 201) {Object} user User's data.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiError 401 Current user access only.
+ * @apiError 404 User not found.
+ */
+router.put('/:id/token',
+    master(),
+    body({ token }),
+    updateToken
+)
+
+/**
+ * @api {put} /users/:id/token Update => Remove Device Token
+ * @apiName UpdateToken
+ * @apiGroup User
+ * @apiHeader {String} Authorization Basic authorization with email and password.
+ * @apiParam {String{6..}} password User's new password.
+ * @apiSuccess (Success 201) {Object} user User's data.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiError 401 Current user access only.
+ * @apiError 404 User not found.
+ */
+router.put('/:id/token/remove',
+    master(),
+    updateToken
+)
 
 /**
  * @api {delete} /users/:id Delete user

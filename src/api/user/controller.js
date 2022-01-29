@@ -76,6 +76,14 @@ export const updatePassword = ({ bodymen: { body }, params, user }, res, next) =
     .then(success(res))
     .catch(next)
 
+export const updateToken = ({ bodymen: { body }, params }, res, next) =>
+    User.findById(params.id)
+    .then(notFound(res))
+    .then((user) => user ? user.set({ device_token: body.token }).save() : null)
+    .then((user) => user ? user.view(true) : null)
+    .then(success(res))
+    .catch(next)
+
 export const destroy = ({ params }, res, next) =>
     User.findById(params.id)
     .then(notFound(res))
