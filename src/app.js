@@ -126,7 +126,7 @@ io.on('connection', function(socket) {
      * 
      * TODO: Send Message to receiver
      */
-    socket.on('send_message', (message) => {
+    socket.on('send_message', async(message) => {
 
         let senderID = message.senderID
         let roomID = message.roomID
@@ -146,12 +146,13 @@ io.on('connection', function(socket) {
             timeToLive: 60 * 60 * 24
         };
 
-        // Get All User
-        User.find({}).toArray((err, res) => {
+        if (roomID == '61d5204483cef30016d260f6') {
+            // Get All User
+            var users = await User.find({})
 
-            console.log(res)
+            console.log(users)
 
-            for (let i = 0; i < res.length; i++) {
+            for (let i = 0; i < users.length; i++) {
 
                 let device_token = res[i].device_token
 
@@ -165,8 +166,7 @@ io.on('connection', function(socket) {
                         })
                 }
             }
-        })
-
+        }
 
 
         Room.findOne({ _id: ObjectId(roomID) }, (err, room) => {
