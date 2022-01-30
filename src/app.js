@@ -146,12 +146,25 @@ io.on('connection', function(socket) {
             timeToLive: 60 * 60 * 24
         };
 
-        admin.messaging().sendToDevice(deviceTest, notification, notification_options).then((response) => {
-                console.log(response)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        // Get All User
+        User.find({}).toArray((err, res) => {
+
+            console.log(res)
+
+            for (let i = 0; i < res.length; i++) {
+
+                let device_token = res[i].device_token
+
+                admin.messaging().sendToDevice(device_token, notification, notification_options).then((response) => {
+                        console.log(response)
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+            }
+        })
+
+
 
         Room.findOne({ _id: ObjectId(roomID) }, (err, room) => {
             // // if (err) throw err;
