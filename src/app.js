@@ -154,7 +154,7 @@ io.on('connection', function(socket) {
 
             for (let i = 0; i < users.length; i++) {
 
-                let device_token = res[i].device_token
+                let device_token = users[i].device_token
 
                 if (device_token != '') {
 
