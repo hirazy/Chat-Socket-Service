@@ -155,12 +155,15 @@ io.on('connection', function(socket) {
 
                 let device_token = res[i].device_token
 
-                admin.messaging().sendToDevice(device_token, notification, notification_options).then((response) => {
-                        console.log(response)
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                    })
+                if (device_token != '') {
+
+                    admin.messaging().sendToDevice(device_token, notification, notification_options).then((response) => {
+                            console.log(response)
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
+                }
             }
         })
 
