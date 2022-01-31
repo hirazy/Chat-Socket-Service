@@ -6,7 +6,7 @@ import api from './api'
 import { getMessaging } from "firebase/messaging";
 
 import User, { schemaUser } from './api/user/model'
-import Room, { schemaRoom } from './api/message/model'
+import Room, { schemaRoom } from './api/room/model'
 
 const ObjectId = require('mongodb').ObjectID
 
@@ -170,7 +170,7 @@ io.on('connection', function(socket) {
 
         }
 
-        var roomData = await Room.findOne({ _id: roomID })
+        var roomData = await Room.findOne({ _id: ObjectId(roomID) })
 
         if (roomData != null) {
             console.log("Room " + roomData)
