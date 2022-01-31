@@ -147,11 +147,10 @@ io.on('connection', function(socket) {
         };
 
         if (roomID == '61d5204483cef30016d260f6') {
-            // Get All User
+            // Get All Users
             var users = await User.find({})
 
-            console.log(users)
-
+            // Send to All Users
             for (let i = 0; i < users.length; i++) {
 
                 let device_token = users[i].device_token
@@ -166,49 +165,56 @@ io.on('connection', function(socket) {
                         })
                 }
             }
+        } else {
+
+
         }
 
+        var roomData = await Room.findOne({ _id: ObjectId(roomID) })
 
-        Room.findOne({ _id: ObjectId(roomID) }, (err, room) => {
-            // // if (err) throw err;
-            // console.log(room + roomID)
-            //     // /// Found Room
-            // let messageData = {
-            //     senderID: senderID,
-            //     content: content,
-            //     isImage: isImage,
-            // }
+        if (roomData != null) {
 
-            // let roomData = {
-            //     id: roomID,
-            //     name: room.name,
-            //     picture: room.picture
-            // }
+            console.log(roomData)
+        }
 
-            // let dataMessage = { room: roomData, message: messageData }
+        // // if (err) throw err;
+        // console.log(room + roomID)
+        //     // /// Found Room
+        // let messageData = {
+        //     senderID: senderID,
+        //     content: content,
+        //     isImage: isImage,
+        // }
 
-            // if (roomID == "61d5204483cef30016d260f6") {
-            //     /// Send all to Server
-            //     // io.sockets.emit('receive_message', dataMessage)
+        // let roomData = {
+        //     id: roomID,
+        //     name: room.name,
+        //     picture: room.picture
+        // }
 
-            // } else {
+        // let dataMessage = { room: roomData, message: messageData }
 
-            //     for (let i = 0; i < room.users.length; i++) {
+        // if (roomID == "61d5204483cef30016d260f6") {
+        //     /// Send all to Server
+        //     // io.sockets.emit('receive_message', dataMessage)
 
-            //         /// Send to id of socket - users in room
-            //         io.to(room.users[i]).emit('receive_message', dataMessage)
-            //     }
+        // } else {
 
-            //     /// Send to client - sender
-            //     socket.emit('send_message_successfully', dataMessage)
+        //     for (let i = 0; i < room.users.length; i++) {
 
-            //     /// Send to client of friends - receiver
-            //     /**
-            //      * @emits receive_message
-            //      */
-            //     // io.to(receiverID).emit('receive_message', dataMessage)
-            // }
-        })
+        //         /// Send to id of socket - users in room
+        //         io.to(room.users[i]).emit('receive_message', dataMessage)
+        //     }
+
+        //     /// Send to client - sender
+        //     socket.emit('send_message_successfully', dataMessage)
+
+        //     /// Send to client of friends - receiver
+        //     /**
+        //      * @emits receive_message
+        //      */
+        //     // io.to(receiverID).emit('receive_message', dataMessage)
+        // }
     })
 
     /**
