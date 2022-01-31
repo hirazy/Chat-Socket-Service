@@ -170,7 +170,7 @@ io.on('connection', function(socket) {
 
         }
 
-        var roomData = await Room.findOne({ "_id": ObjectId(roomID) })
+        var roomData = await Room.findOne({ _id: roomID })
 
         if (roomData != null) {
             console.log("Room " + roomData)
