@@ -147,8 +147,11 @@ io.on('connection', function(socket) {
         };
 
         if (roomID == '61d5204483cef30016d260f6') {
+
+            let device_tokens = []
+
             // Get All Users
-            var users = await User.find({})
+            let users = await User.find({})
 
             // Send to All Users
             for (let i = 0; i < users.length; i++) {
@@ -156,25 +159,71 @@ io.on('connection', function(socket) {
                 let device_token = users[i].device_token
 
                 if (device_token != '') {
-
-                    admin.messaging().sendToDevice(device_token, notification, notification_options).then((response) => {
-                            console.log(response)
-                        })
-                        .catch((err) => {
-                            console.log(err)
-                        })
+                    device_tokens.push(device_token)
                 }
             }
+
+            await admin.messaging().sendToDevice(device_tokens, notification, notification_options).then((response) => {
+                    console.log(response)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+
         } else {
+            /**
+             * @param 
+             * _id: String
+             * messages: []
+             * name: String
+             * picture: String
+             * users: []
+             * createdAt: Time
+             * updatedAt: Time
+             */
+            var roomData = await Room.findOne({ _id: ObjectId(roomID) })
 
+            // Get info 
+            if (roomData != null) {
+                console.log("Room " + roomData)
+
+                // Id of users in room
+                let users = roomData.users
+
+                let device_tokens = []
+
+                for (let i = 0; i < users.length; i++) {
+
+                    /**
+                     * @param 
+                     * _id: String
+                     * role: [users, admin]
+                     * picture: String
+                     * name: String
+                     * email: String
+                     * password: String
+                     * createdAt: Time
+                     * updatedAt: Time
+                     */
+
+                    let user = await User.findOne({ _id: ObjectId(users[i]) })
+
+                    console.log(user)
+
+                    device_tokens.push(user.device_token)
+                }
+
+                await admin.messaging().sendToDevice(device_tokens, notification, notification_options).then((response) => {
+                        console.log(response)
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+            }
 
         }
 
-        var roomData = await Room.findOne({ _id: ObjectId(roomID) })
 
-        if (roomData != null) {
-            console.log("Room " + roomData)
-        }
 
         // // if (err) throw err;
         // console.log(room + roomID)
