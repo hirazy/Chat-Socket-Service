@@ -133,12 +133,19 @@ io.on('connection', function(socket) {
         let content = message.content
         let isImage = message.isImage
 
-        var notification = {
+        let messageData = {
+            roomID: roomID,
+            content: content,
+            senderID: senderID,
+            isImage: isImage,
+        }
+
+        let notification = {
             notification: {
                 title: 'Message from node',
-                body: message.content
+                body: content
             },
-            // topic: 'topic'
+            data: messageData
         };
 
         const notification_options = {
@@ -222,8 +229,6 @@ io.on('connection', function(socket) {
             }
 
         }
-
-
 
         // // if (err) throw err;
         // console.log(room + roomID)
