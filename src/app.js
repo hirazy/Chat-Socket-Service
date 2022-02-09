@@ -137,7 +137,7 @@ io.on('connection', function(socket) {
             'roomID': roomID,
             'content': content,
             'senderID': senderID,
-            'isImage': false
+            'isImage': isImage.toString()
         }
 
         let notification = {
