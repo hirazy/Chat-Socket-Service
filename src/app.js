@@ -134,10 +134,10 @@ io.on('connection', function(socket) {
         let isImage = message.isImage
 
         let messageData = {
-            roomID: roomID,
-            content: content,
-            senderID: senderID,
-            isImage: isImage,
+            'roomID': roomID,
+            'content': content,
+            'senderID': senderID,
+            'isImage': isImage
         }
 
         let notification = {
