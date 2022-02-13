@@ -165,9 +165,10 @@ io.on('connection', function(socket) {
             // Send to All Users
             for (let i = 0; i < users.length; i++) {
 
+                // Device Token
                 let device_token = users[i].device_token
 
-                if (device_token != '') {
+                if (device_token != '' && senderID != users[i]._id) {
                     device_tokens.push(device_token)
                 }
             }
@@ -216,8 +217,6 @@ io.on('connection', function(socket) {
                      */
 
                     let user = await User.findOne({ _id: ObjectId(users[i]) })
-
-                    console.log(user)
 
                     device_tokens.push(user.device_token)
                 }
