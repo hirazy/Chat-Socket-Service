@@ -56,7 +56,7 @@ roomSchema.methods = {
             }
             // ...view
             // add properties for a full view
-        let fields = ['_id', 'name', 'users', 'messages', 'picture']
+        let fields = ['_id', 'name', 'users', 'messages', 'picture', 'updatedAt']
 
         if (full) {
             fields = [...fields, 'name', 'picture', 'recentMessage']

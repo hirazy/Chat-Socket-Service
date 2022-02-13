@@ -218,7 +218,9 @@ io.on('connection', function(socket) {
 
                     let user = await User.findOne({ _id: ObjectId(users[i]) })
 
-                    device_tokens.push(user.device_token)
+                    if (user.device_token != '' && senderID != users[i]._id) {
+                        device_tokens.push(user.device_token)
+                    }
                 }
 
                 await admin.messaging().sendToDevice(device_tokens, notification, notification_options).then((response) => {
@@ -230,45 +232,6 @@ io.on('connection', function(socket) {
             }
 
         }
-
-        // // if (err) throw err;
-        // console.log(room + roomID)
-        //     // /// Found Room
-        // let messageData = {
-        //     senderID: senderID,
-        //     content: content,
-        //     isImage: isImage,
-        // }
-
-        // let roomData = {
-        //     id: roomID,
-        //     name: room.name,
-        //     picture: room.picture
-        // }
-
-        // let dataMessage = { room: roomData, message: messageData }
-
-        // if (roomID == "61d5204483cef30016d260f6") {
-        //     /// Send all to Server
-        //     // io.sockets.emit('receive_message', dataMessage)
-
-        // } else {
-
-        //     for (let i = 0; i < room.users.length; i++) {
-
-        //         /// Send to id of socket - users in room
-        //         io.to(room.users[i]).emit('receive_message', dataMessage)
-        //     }
-
-        //     /// Send to client - sender
-        //     socket.emit('send_message_successfully', dataMessage)
-
-        //     /// Send to client of friends - receiver
-        //     /**
-        //      * @emits receive_message
-        //      */
-        //     // io.to(receiverID).emit('receive_message', dataMessage)
-        // }
     })
 
     /**
