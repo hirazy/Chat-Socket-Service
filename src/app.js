@@ -160,6 +160,8 @@ io.on('connection', function(socket) {
             // Get All Users
             let users = await User.find({})
 
+            console.log("Users " + users)
+
             // Send to All Users
             for (let i = 0; i < users.length; i++) {
 
