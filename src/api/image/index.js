@@ -129,9 +129,9 @@ router.post('/', master(), upload.single('image'), async(req, res) => {
         const filename = await fileUpload.save(req.file.buffer);
         console.log('File Name: ' + filename)
 
-        var filePath = path.join(__dirname, "/uploads/" + filename).split("%20").join(" ");
-        const result = await uploadFile(filePath, filename)
-        console.log("Amazon S3 " + result)
+        // var filePath = path.join(__dirname, "/uploads/" + filename).split("%20").join(" ");
+        // const result = await uploadFile(filePath, filename)
+        // console.log("Amazon S3 " + result)
 
         res.status(200).json({ name: filename });
     }
