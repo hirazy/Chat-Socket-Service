@@ -2,7 +2,6 @@ import { Router } from 'express'
 import { success, notFound } from '../../services/response/'
 import { password, master } from '../../services/passport'
 
-var path = require("path");
 const fs = require("fs");
 const upload = require('../uploadMiddleware');
 const Resize = require('../Resize');
