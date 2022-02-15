@@ -12,7 +12,7 @@ const s3 = new S3({
 
 // upload a file to s3
 export function uploadFile(path, name) {
-    console.log("AWS_BUCKET_NAME " + awsBucketName)
+    console.log("AWS " + awsBucketName + " " + awsAccessKey + " " + awsSecretKey)
 
     const fileStream = fs.createReadStream(path)
 
