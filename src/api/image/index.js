@@ -6,7 +6,7 @@ const fs = require("fs");
 const upload = require('../uploadMiddleware');
 const Resize = require('../Resize');
 const path = require('path');
-const { uploadFile } = require('../../services/amazon_s3/s3')
+const { uploadFile, getFileStream } = require('../../services/amazon_s3/s3')
 
 const router = new Router()
 

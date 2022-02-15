@@ -26,9 +26,6 @@ function uploadFile(path, name) {
 
 exports.uploadFile = uploadFile
 
-
-// downloads a file from s3
-
 // downloads a file from s3
 function getFileStream(fileKey) {
     const downloadParams = {
