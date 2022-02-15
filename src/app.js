@@ -133,6 +133,8 @@ io.on('connection', function(socket) {
         let content = message.content
         let isImage = message.isImage
 
+        console.log("Send Message " + senderID)
+
         let messageData = {
             'roomID': roomID,
             'content': content,
@@ -160,8 +162,6 @@ io.on('connection', function(socket) {
             // Get All Users
             let users = await User.find({})
 
-            console.log("Users " + users)
-
             // Send to All Users
             for (let i = 0; i < users.length; i++) {
 
@@ -174,7 +174,7 @@ io.on('connection', function(socket) {
             }
 
             await admin.messaging().sendToDevice(device_tokens, notification, notification_options).then((response) => {
-                    console.log(response)
+                    // console.log(response)
                 })
                 .catch((err) => {
                     console.log(err)
@@ -195,7 +195,6 @@ io.on('connection', function(socket) {
 
             // Get info 
             if (roomData != null) {
-                console.log("Room " + roomData)
 
                 // Id of users in room
                 let users = roomData.users
@@ -224,7 +223,7 @@ io.on('connection', function(socket) {
                 }
 
                 await admin.messaging().sendToDevice(device_tokens, notification, notification_options).then((response) => {
-                        console.log(response)
+                        console.log("Result Messaging" + response)
                     })
                     .catch((err) => {
                         console.log(err)

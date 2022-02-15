@@ -6,6 +6,7 @@ const fs = require("fs");
 const upload = require('../uploadMiddleware');
 const Resize = require('../Resize');
 const path = require('path');
+const { uploadFile } = require('../../services/amazon_s3/s3')
 
 const router = new Router()
 
@@ -124,6 +125,11 @@ router.post('/', master(), upload.single('image'), async(req, res) => {
     if (!req.file) {
         res.status(401).json({ error: 'Please provide an image' });
     } else {
+        console.log("File " + req.file)
+
+        const result = await uploadFile(req.file)
+        console.log(result)
+
         const filename = await fileUpload.save(req.file.buffer);
         console.log('File Name: ' + filename)
         res.status(200).json({ name: filename });
