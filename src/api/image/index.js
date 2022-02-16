@@ -74,17 +74,19 @@ router.get('/:path', (req, res) => {
 router.post('/', master(), upload.single('image'), async(req, res) => {
 
     const imagePath = path.join(__dirname, '/uploads');
-    // // call class Resize
+
+    console.log(req.file)
+        // // call class Resize
     const fileUpload = new Resize(imagePath);
     if (!req.file) {
         res.status(401).json({ error: 'Please provide an image' });
     } else {
-        console.log(req.file.path)
-            // const filename = await fileUpload.save(req.file.buffer);
-            // console.log('File Name: ' + filename)
+
+        const filename = await fileUpload.save(req.file.buffer);
+        console.log('File Name: ' + filename)
 
         // Upload Image Amazon S3
-        // var filePath = path.join(__dirname, "/uploads/" + filename).split("%20").join(" ");
+        var filePath = path.join(__dirname, "/uploads/" + filename).split("%20").join(" ");
         const result = await uploadFile(req.file)
         console.log("Amazon S3 " + result)
 
