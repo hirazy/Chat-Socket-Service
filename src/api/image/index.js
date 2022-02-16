@@ -81,7 +81,7 @@ router.post('/', master(), upload.single('image'), async(req, res) => {
 
     const file = req.file
 
-    console.log(file['mimetype'])
+    console.log(file['type'])
 
     if (!file || file['mimetype'].split('/')[0] !== 'image') {
         res.status(401).json({ error: 'Please provide an image' });
