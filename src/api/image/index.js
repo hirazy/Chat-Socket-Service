@@ -24,40 +24,46 @@ const router = new Router()
  * @apiError 401 Master access only or invalid credentials.
  */
 router.get('/:path', (req, res) => {
-    var action = req.params.path;
+    console.log(req.params.path)
+    const key = req.params.path
+    const readStream = getFileStream(key)
 
-    var filePath = path.join(__dirname, "/uploads/" + action).split("%20").join(" ");
+    readStream.pipe(res)
 
-    console.log("Hello 123 " + filePath)
+    // var action = req.params.path;
 
-    // Checking if the path exists
-    fs.exists(filePath, function(exists) {
-        if (!exists) {
-            res.writeHead(404, {
-                "Content-Type": "text/plain"
-            });
-            res.end("404 Not Found");
-            return;
-        }
-        // Extracting file extension
-        var ext = path.extname(action);
-        // Setting default Content-Type
-        var contentType = "text/plain";
-        // Checking if the extension of
-        // image is '.png'
-        if (ext === ".png") {
-            contentType = "image/png";
-        }
-        // Setting the headers
-        res.writeHead(200, {
-            "Content-Type": contentType
-        });
-        // Reading the file
-        fs.readFile(filePath, (err, content) => {
-            // Serving the image
-            res.end(content);
-        });
-    });
+    // var filePath = path.join(__dirname, "/uploads/" + action).split("%20").join(" ");
+
+    // console.log("Hello 123 " + filePath)
+
+    // // Checking if the path exists
+    // fs.exists(filePath, function(exists) {
+    //     if (!exists) {
+    //         res.writeHead(404, {
+    //             "Content-Type": "text/plain"
+    //         });
+    //         res.end("404 Not Found");
+    //         return;
+    //     }
+    //     // Extracting file extension
+    //     var ext = path.extname(action);
+    //     // Setting default Content-Type
+    //     var contentType = "text/plain";
+    //     // Checking if the extension of
+    //     // image is '.png'
+    //     if (ext === ".png") {
+    //         contentType = "image/png";
+    //     }
+    //     // Setting the headers
+    //     res.writeHead(200, {
+    //         "Content-Type": contentType
+    //     });
+    //     // Reading the file
+    //     fs.readFile(filePath, (err, content) => {
+    //         // Serving the image
+    //         res.end(content);
+    //     });
+    // });
 })
 
 /**
@@ -88,7 +94,7 @@ router.post('/', master(), upload.single('image'), async(req, res) => {
         console.log(result)
         const description = req.body.description
 
-        res.status(200).json({ name: `/images/${result.Key}` });
+        res.status(200).json({ name: result.Key });
     }
 })
 
