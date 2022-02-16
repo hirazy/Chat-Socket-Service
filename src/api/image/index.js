@@ -3,6 +3,7 @@ import { success, notFound } from '../../services/response/'
 import { password, master } from '../../services/passport'
 
 const fs = require("fs");
+const unlinkFile = util.promisify(fs.unlink)
 const upload = require('../uploadMiddleware');
 const Resize = require('../Resize');
 const path = require('path');
@@ -10,54 +11,6 @@ const { uploadFile, getFileStream } = require('../../services/amazon_s3/s3')
 
 const router = new Router()
 
-// var multer = require('multer')
-// var storage = multer.diskStorage({
-//     destination: function(req, file, callback) {
-//         callback(null, './uploads');
-//     },
-//     filename: function(req, file, callback) {
-//         callback(null, Date.now() + '-' + file.originalname);
-//     }
-// });
-// var upload = multer({ storage: storage });
-
-// var storage = multer.diskStorage({
-//     destination: function(req, file, cb) {
-
-//         // Uploads is the Upload_folder_name
-//         cb(null, '/uploads')
-//     },
-//     filename: function(req, file, cb) {
-//         cb(null, file.fieldname + "-" + Date.now() + ".jpg")
-//     }
-// })
-
-// // Define the maximum size for uploading
-// // picture i.e. 1 MB. it is optional
-// const maxSize = 1 * 1000 * 1000;
-
-// var upload = multer({
-//     storage: storage,
-//     limits: { fileSize: maxSize },
-//     fileFilter: function(req, file, cb) {
-
-//         // Set the filetypes, it is optional
-//         var filetypes = /jpeg|jpg|png/;
-//         var mimetype = filetypes.test(file.mimetype);
-
-//         var extname = filetypes.test(path.extname(
-//             file.originalname).toLowerCase());
-
-//         if (mimetype && extname) {
-//             return cb(null, true);
-//         }
-
-//         cb("Error: File upload only supports the " +
-//             "following filetypes - " + filetypes);
-//     }
-
-//     // mypic is the name of file attribute
-// }).single("mypic");
 /**
  * @api {post} /image Upload image
  * @apiName Upload Image
@@ -125,16 +78,20 @@ router.post('/', master(), upload.single('image'), async(req, res) => {
     if (!req.file) {
         res.status(401).json({ error: 'Please provide an image' });
     } else {
-
-        const filename = await fileUpload.save(req.file.buffer);
-        console.log('File Name: ' + filename)
+        console.log("File " + req.file)
+            // const filename = await fileUpload.save(req.file.buffer);
+            // console.log('File Name: ' + filename)
 
         // Upload Image Amazon S3
-        var filePath = path.join(__dirname, "/uploads/" + filename).split("%20").join(" ");
-        const result = await uploadFile(filePath, filename)
+        // var filePath = path.join(__dirname, "/uploads/" + filename).split("%20").join(" ");
+        const result = await uploadFile(req.file)
         console.log("Amazon S3 " + result)
 
-        res.status(200).json({ name: filename });
+        await unlinkFile(file.path)
+        console.log(result)
+        const description = req.body.description
+
+        res.status(200).json({ name: `/images/${result.Key}` });
     }
 })
 
