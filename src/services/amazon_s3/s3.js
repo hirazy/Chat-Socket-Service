@@ -15,12 +15,12 @@ function uploadFile(path, name) {
 
     const fileStream = fs.createReadStream(path)
 
-    console.log(awsBucketName + " " + fileStream)
+    console.log(awsBucketName + " " + awsBucketRegion + " " + awsAccessKey + " " + awsSecretKey)
 
     const uploadParams = {
         Bucket: awsBucketName,
         Body: fileStream,
-        Key: name
+        Key: "cat.jpg"
     }
 
     return s3.upload(uploadParams).promise()
