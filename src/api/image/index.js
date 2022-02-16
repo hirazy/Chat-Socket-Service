@@ -79,7 +79,9 @@ router.post('/', master(), upload.single('image'), async(req, res) => {
         res.status(401).json({ error: 'Please provide an image' });
     } else {
 
-        const result = await uploadFile(req.file)
+        console.log(file)
+
+        const result = await uploadFile(file)
         console.log("Amazon S3 " + result)
 
         await unlinkFile(file.path)
