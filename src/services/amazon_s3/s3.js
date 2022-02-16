@@ -5,9 +5,9 @@ const S3 = require('aws-sdk/clients/s3')
 import { awsBucketName, awsBucketRegion, awsAccessKey, awsSecretKey } from '../../config'
 
 const s3 = new S3({
-    awsBucketRegion,
-    awsAccessKey,
-    awsSecretKey
+    region: awsBucketRegion,
+    accessKeyId: awsAccessKey,
+    accessSecretKey: awsSecretKey
 })
 
 // upload a file to s3
