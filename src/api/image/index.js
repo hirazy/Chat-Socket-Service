@@ -81,23 +81,23 @@ router.post('/', master(), upload.single('image'), async(req, res) => {
 
     const file = req.file
 
-    console.log(file['type'])
+    //console.log(file['type'])
 
-    if (!file || file['mimetype'].split('/')[0] !== 'image') {
-        res.status(401).json({ error: 'Please provide an image' });
-    } else {
+    // if (!file || file['mimetype'].split('/')[0] !== 'image') {
+    //     res.status(401).json({ error: 'Please provide an image' });
+    // } else {
 
-        console.log(file)
+    console.log(file)
 
-        const result = await uploadFile(file)
-        console.log("Amazon S3 " + result)
+    const result = await uploadFile(file)
+    console.log("Amazon S3 " + result)
 
-        await unlinkFile(file.path)
-        console.log(result)
-        const description = req.body.description
+    await unlinkFile(file.path)
+    console.log(result)
+    const description = req.body.description
 
-        res.status(200).json({ name: result.Key });
-    }
+    res.status(200).json({ name: result.Key });
+    // }
 })
 
 export default router
