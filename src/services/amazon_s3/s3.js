@@ -15,7 +15,7 @@ function uploadFile(path, name) {
 
     const fileStream = fs.createReadStream(path)
 
-    console.log(awsBucketName + " " + name)
+    console.log(awsBucketName + " " + fileStream)
 
     const uploadParams = {
         Bucket: awsBucketName,
