@@ -15,6 +15,8 @@ function uploadFile(path, name) {
 
     const fileStream = fs.createReadStream(path)
 
+    console.log(awsBucketName + " " + name)
+
     const uploadParams = {
         Bucket: awsBucketName,
         Body: fileStream,
@@ -30,7 +32,7 @@ exports.uploadFile = uploadFile
 function getFileStream(fileKey) {
     const downloadParams = {
         Key: fileKey,
-        Bucket: bucketName
+        Bucket: awsBucketName
     }
 
     return s3.getObject(downloadParams).createReadStream()
