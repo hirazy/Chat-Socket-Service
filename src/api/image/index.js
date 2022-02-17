@@ -29,41 +29,6 @@ router.get('/:path', (req, res) => {
     const readStream = getFileStream(key)
 
     readStream.pipe(res)
-
-    // var action = req.params.path;
-
-    // var filePath = path.join(__dirname, "/uploads/" + action).split("%20").join(" ");
-
-    // console.log("Hello 123 " + filePath)
-
-    // // Checking if the path exists
-    // fs.exists(filePath, function(exists) {
-    //     if (!exists) {
-    //         res.writeHead(404, {
-    //             "Content-Type": "text/plain"
-    //         });
-    //         res.end("404 Not Found");
-    //         return;
-    //     }
-    //     // Extracting file extension
-    //     var ext = path.extname(action);
-    //     // Setting default Content-Type
-    //     var contentType = "text/plain";
-    //     // Checking if the extension of
-    //     // image is '.png'
-    //     if (ext === ".png") {
-    //         contentType = "image/png";
-    //     }
-    //     // Setting the headers
-    //     res.writeHead(200, {
-    //         "Content-Type": contentType
-    //     });
-    //     // Reading the file
-    //     fs.readFile(filePath, (err, content) => {
-    //         // Serving the image
-    //         res.end(content);
-    //     });
-    // });
 })
 
 /**
