@@ -90,13 +90,13 @@ export const updateToken = ({ bodymen: { body }, params }, res, next) =>
     .then(success(res))
     .catch(next)
 
-export const updatePicture = async({ params }, req, res, next) => {
+export const updatePicture = async(req, res, next) => {
     // Save file image to Amazon
     const file = req.file
     const result = await uploadFile(file)
     await unlinkFile(file.path)
 
-    User.findById(params.id)
+    User.findById(req.params.id)
         .then(notFound(res))
         .then((user) => user ? user.set({ picture: result.Key }).save() : null)
         .then((user) => user ? user.view(true) : null)
