@@ -1,6 +1,7 @@
 import { success, notFound } from '../../services/response/'
 import User, { schema } from './model'
 
+const util = require('util')
 const fs = require("fs");
 const { uploadFile } = require('../../services/amazon_s3/s3')
 const unlinkFile = util.promisify(fs.unlink)
