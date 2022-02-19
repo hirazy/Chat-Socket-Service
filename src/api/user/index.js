@@ -134,8 +134,8 @@ router.put('/:id/token',
  * @apiError 404 User not found.
  */
 router.put('/:id/picture',
-    upload.single('image'),
     master(),
+    upload.single('image'),
     updatePicture)
 
 /**
