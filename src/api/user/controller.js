@@ -1,6 +1,11 @@
 import { success, notFound } from '../../services/response/'
 import User, { schema } from './model'
 
+const fs = require("fs");
+const { uploadFile } = require('../../services/amazon_s3/s3')
+const unlinkFile = util.promisify(fs.unlink)
+
+
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     User.find(query, select, cursor)
     .then((users) => users.map((user) => user.view()))
@@ -83,6 +88,20 @@ export const updateToken = ({ bodymen: { body }, params }, res, next) =>
     .then((user) => user ? user.view(true) : null)
     .then(success(res))
     .catch(next)
+
+export const updatePicture = (req, res, next) => {
+    // Save file image to Amazon
+    const file = req.file
+    const result = await uploadFile(file)
+    await unlinkFile(file.path)
+
+    User.findById(params.id)
+        .then(notFound(res))
+        .then((user) => user ? user.set({ picture: result.Key }).save() : null)
+        .then((user) => user ? user.view(true) : null)
+        .then(success(res))
+        .catch(next)
+}
 
 export const destroy = ({ params }, res, next) =>
     User.findById(params.id)

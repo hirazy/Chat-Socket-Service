@@ -1,8 +1,9 @@
 import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
+const upload = require('../uploadMiddleware');
 import { password as passwordAuth, master, token } from '../../services/passport'
-import { index, showMe, show, create, update, updatePassword, updateToken, destroy } from './controller'
+import { index, showMe, show, create, update, updatePassword, updateToken, updatePicture, destroy } from './controller'
 import User, { schema } from './model'
 
 const router = new Router()
@@ -121,20 +122,21 @@ router.put('/:id/token',
 )
 
 /**
- * @api {put} /users/:id/token Update => Remove Device Token
- * @apiName UpdateToken
+ * @api {put} /users/:id Update user [Picture]
+ * @apiName UpdateUser
  * @apiGroup User
- * @apiHeader {String} Authorization Basic authorization with email and password.
- * @apiParam {String{6..}} password User's new password.
- * @apiSuccess (Success 201) {Object} user User's data.
+ * @apiPermission user
+ * @apiParam {String} access_token User access_token.
+ * @apiParam {String} [picture] User's picture.
+ * @apiSuccess {Object} user User's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 401 Current user access only.
+ * @apiError 401 Current user or admin access only.
  * @apiError 404 User not found.
  */
-router.put('/:id/token/remove',
+router.put('/:id/picture',
+    upload.single('image'),
     master(),
-    updateToken
-)
+    updatePicture)
 
 /**
  * @api {delete} /users/:id Delete user

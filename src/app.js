@@ -168,7 +168,9 @@ io.on('connection', function(socket) {
                 // Device Token
                 let device_token = users[i].device_token
 
-                if (device_token != '' && senderID != users[i]._id) {
+                console.log("Sender ID " + senderID + " User ID " + users[i]._id)
+
+                if (device_token != '' && senderID !== users[i]._id) {
                     device_tokens.push(device_token)
                 }
             }
