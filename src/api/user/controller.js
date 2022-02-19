@@ -89,7 +89,7 @@ export const updateToken = ({ bodymen: { body }, params }, res, next) =>
     .then(success(res))
     .catch(next)
 
-export const updatePicture = (req, res, next) => {
+export const updatePicture = async(req, res, next) => {
     // Save file image to Amazon
     const file = req.file
     const result = await uploadFile(file)
