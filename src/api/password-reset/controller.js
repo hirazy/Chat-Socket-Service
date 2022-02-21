@@ -1,6 +1,6 @@
 import { success, notFound } from '../../services/response/'
 import { sendMail } from '../../services/sendgrid'
-import { PasswordReset } from '.'
+import { PasswordReset } from './model'
 import User, { schema } from '../user/model'
 
 export const create = ({ bodymen: { body: { email, link } } }, res, next) =>
