@@ -26,7 +26,7 @@ const config = {
         port: process.env.PORT || 9000,
         ip: process.env.IP || '0.0.0.0',
         apiRoot: process.env.API_ROOT || '',
-        defaultEmail: 'no-reply@server-chatapp.com',
+        defaultEmail: 'chatappservice123@gmail.com',
         sendgridKey: requireProcessEnv('SENDGRID_KEY'),
         masterKey: requireProcessEnv('MASTER_KEY'),
         jwtSecret: requireProcessEnv('JWT_SECRET'),
