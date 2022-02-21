@@ -1,7 +1,7 @@
 import { success, notFound } from '../../services/response/'
 import { sendMail } from '../../services/sendgrid'
-import PasswordReset, { schema } from './model'
-import User, { schema } from '../user/model'
+import PasswordReset, {} from './model'
+import User, {} from '../user/model'
 
 export const create = ({ bodymen: { body: { email, link } } }, res, next) =>
     User.findOne({ email: email })
