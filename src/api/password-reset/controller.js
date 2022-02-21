@@ -15,11 +15,11 @@ export const create = ({ bodymen: { body: { email, link } } }, res, next) =>
         Hey, ${user.name}.<br><br>
         You requested a new password for your Server Chatapp account.<br>
         Please use the following link to set a new password. It will expire in 1 hour.<br><br>
-        <a href="${link}">${link}</a><br><br>
+        <a href="${link}">Click here to reset password.</a><br><br>
         If you didn't make this request then you can safely ignore this email. :)<br><br>
         &mdash; Server Chatapp Team
       `
-        return sendMail({ toEmail: email, subject: 'Server Chatapp - Password Reset', content })
+        return sendMail({ toEmail: email, subject: 'Server Chat App - Password Reset', content })
     })
     .then(([response]) => response ? res.status(response.statusCode).end() : null)
     .catch(next)
