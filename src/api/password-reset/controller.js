@@ -16,9 +16,8 @@ export const create = ({ bodymen: { body: { email, link } } }, res, next) =>
         You requested a new password for your Server Chatapp account.<br>
         Please use the following link to set a new password. It will expire in 1 hour.
         <br><br>
-        Click <a href="${token}">${token}</a> to copy to clipboard and reset password.
-        </br></br>
-
+        Click <b>${token}</b> to copy to clipboard and reset password.
+        <br><br>
         If you didn't make this request then you can safely ignore this email. :)<br><br>
         &mdash; Server Chatapp Team
       `
